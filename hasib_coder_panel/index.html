@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>HASIB X GLORY</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0E0E0E; --bg2:#151515; --card:rgba(255,255,255,.035); --card2:rgba(255,255,255,.06);
+  --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.17);
+  --cream:#F5E6D3; --cream2:#D4C4A8; --text:#F4F1EA; --dim:#A19D94; --faint:#6F6B63;
+  --green:#22c55e; --green2:#16a34a; --red:#ef4444; --red2:#b91c1c; --blue:#7dd3fc; --amber:#fbbf24;
+  --sans:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif; --disp:"Outfit","Inter",system-ui,sans-serif;
+  --mono:"Roboto Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{color-scheme:dark;-webkit-text-size-adjust:100%}
+body{min-height:100vh;background:var(--bg);color:var(--text);font:400 1rem/1.5 var(--sans);overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--cream);outline-offset:2px;border-radius:10px}
+.i{width:1.1em;height:1.1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+body[data-role="user"] .owner-only,body[data-role="premium"] .owner-only{display:none!important}
+
+/* ---------- backdrop ---------- */
+#dust{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.glow{position:fixed;z-index:0;border-radius:50%;filter:blur(110px);pointer-events:none;opacity:.16}
+.g1{width:46vmax;height:46vmax;left:-16vmax;top:-20vmax;background:radial-gradient(circle,#F5E6D3,transparent 66%);animation:drift 22s ease-in-out infinite alternate}
+.g2{width:40vmax;height:40vmax;right:-14vmax;bottom:-18vmax;background:radial-gradient(circle,#D4C4A8,transparent 66%);animation:drift 28s ease-in-out infinite alternate-reverse}
+@keyframes drift{to{transform:translate(7vmax,5vmax) scale(1.12)}}
+.gridbg{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
+  background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:56px 56px;-webkit-mask-image:radial-gradient(ellipse at 50% 0%,#000 10%,transparent 72%);mask-image:radial-gradient(ellipse at 50% 0%,#000 10%,transparent 72%)}
+
+/* ---------- buttons (premium green / red / cream) ---------- */
+.btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:44px;padding:.62rem 1.15rem;border-radius:12px;border:1px solid transparent;cursor:pointer;font:600 .95rem var(--sans);letter-spacing:.01em;white-space:nowrap;transition:transform .18s,box-shadow .25s,filter .25s,border-color .25s}
+.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.4) 50%,transparent 70%);transform:translateX(-130%);transition:transform .75s;pointer-events:none}
+.btn:hover::after{transform:translateX(130%)}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(1px) scale(.98)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none;filter:grayscale(.4)}
+.btn-green{color:#05260f;background:linear-gradient(180deg,#5eea8f 0%,#22c55e 48%,#15803d 100%);border-color:rgba(255,255,255,.28);box-shadow:0 10px 26px -10px rgba(34,197,94,.75),inset 0 1px 0 rgba(255,255,255,.45)}
+.btn-green:hover{box-shadow:0 14px 34px -8px rgba(34,197,94,.9),inset 0 1px 0 rgba(255,255,255,.55)}
+.btn-red{color:#fff;background:linear-gradient(180deg,#fb7185 0%,#ef4444 48%,#b91c1c 100%);border-color:rgba(255,255,255,.25);box-shadow:0 10px 26px -10px rgba(239,68,68,.7),inset 0 1px 0 rgba(255,255,255,.35)}
+.btn-red:hover{box-shadow:0 14px 34px -8px rgba(239,68,68,.9)}
+.btn-cream{color:#1c150d;background:linear-gradient(135deg,#F5E6D3,#D4C4A8);border-color:rgba(255,255,255,.4);box-shadow:0 10px 26px -12px rgba(245,230,211,.6),inset 0 1px 0 rgba(255,255,255,.6)}
+.btn-ghost{color:var(--text);background:rgba(255,255,255,.05);border-color:var(--line2)}
+.btn-ghost:hover{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.3)}
+.btn-ghost-red{color:#fecaca;background:rgba(239,68,68,.09);border-color:rgba(239,68,68,.45)}
+.btn-ghost-red:hover{background:rgba(239,68,68,.18)}
+.btn.sm{min-height:36px;padding:.38rem .8rem;font-size:.86rem;border-radius:10px}
+.btn.xl{min-height:54px;padding:.8rem 1.6rem;font-size:1.05rem;border-radius:14px}
+.btn.block{width:100%}
+.ico-btn{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.04);cursor:pointer;color:var(--dim);transition:.2s}
+.ico-btn:hover{color:var(--text);border-color:var(--line2);background:rgba(255,255,255,.09);transform:translateY(-1px)}
+.ico-btn.red:hover{color:#fecaca;border-color:rgba(239,68,68,.6);background:rgba(239,68,68,.14)}
+.ico-btn.green:hover{color:#bbf7d0;border-color:rgba(34,197,94,.6);background:rgba(34,197,94,.14)}
+
+/* ---------- login ---------- */
+#login{position:relative;z-index:3;min-height:100vh;display:flex;flex-direction:column;align-items:center;gap:34px;padding:28px 18px 40px}
+.land{width:min(1040px,100%);display:grid;gap:26px}
+.lhero{text-align:center;padding:34px 20px 8px}
+.lhero h2{font:800 clamp(1.9rem,5.4vw,3.2rem)/1.08 var(--disp);letter-spacing:.01em;margin:10px 0 8px}
+.lhero h2 em{font-style:normal;background:linear-gradient(90deg,#5eea8f,#F5E6D3);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lhero p{color:var(--dim);max-width:640px;margin:0 auto 18px}
+.trial-badge{display:inline-flex;gap:8px;align-items:center;padding:.3rem .9rem;border-radius:999px;border:1px solid rgba(34,197,94,.55);background:rgba(34,197,94,.12);color:#86efac;font-weight:700;font-size:.85rem}
+.lhero .cta2{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.feat div{padding:16px;border-radius:16px;border:1px solid var(--line);background:var(--card)}
+.feat b{display:block;margin-bottom:4px}.feat span{color:var(--dim);font-size:.88rem}
+.land h3{text-align:center;font:700 1.35rem var(--disp);margin:6px 0 0}
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.plan{position:relative;padding:20px 18px;border-radius:18px;border:1px solid var(--line2);background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));display:grid;gap:8px}
+.plan.hot{border-color:rgba(34,197,94,.7);box-shadow:0 20px 50px -24px rgba(34,197,94,.7)}
+.plan .tag{position:absolute;top:-11px;right:14px;background:#22c55e;color:#05260f;font:800 .7rem var(--sans);padding:.15rem .6rem;border-radius:999px}
+.plan .pr{font:800 1.9rem var(--disp)}.plan .pr small{font:500 .8rem var(--sans);color:var(--dim)}
+.plan ul{list-style:none;padding:0;margin:0;display:grid;gap:5px;color:var(--dim);font-size:.88rem}
+.plan li::before{content:"✔ ";color:#22c55e}
+.contact{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;color:var(--dim);font-size:.9rem;align-items:center}
+.login-card{width:min(420px,100%);padding:34px 30px 26px;border-radius:24px;background:linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.025));border:1px solid var(--line2);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 40px 90px -30px #000,inset 0 1px 0 rgba(255,255,255,.1);animation:rise .8s cubic-bezier(.2,.9,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(24px) scale(.97)}}
+.logo{display:grid;place-items:center;width:64px;height:64px;margin:0 auto 16px;border-radius:18px;background:linear-gradient(135deg,#F5E6D3,#D4C4A8);color:#1c150d;box-shadow:0 14px 40px -12px rgba(245,230,211,.55);animation:float 4s ease-in-out infinite}
+.logo .i{width:30px;height:30px}
+@keyframes float{50%{transform:translateY(-4px)}}
+.brand-xl{font:800 clamp(1.7rem,7vw,2.1rem)/1.1 var(--disp);text-align:center;letter-spacing:.04em;background:linear-gradient(180deg,#fff,#D4C4A8);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{text-align:center;color:var(--dim);margin:8px 0 24px;font-size:.95rem}
+.lbl{display:block;color:var(--dim);font-size:.85rem;font-weight:500;margin-bottom:6px}
+.input{width:100%;min-height:46px;padding:.65rem .9rem;border-radius:12px;border:1px solid var(--line2);background:rgba(0,0,0,.35);color:var(--text);outline:none;transition:.2s}
+.input:focus{border-color:var(--cream2);box-shadow:0 0 0 3px rgba(245,230,211,.13)}
+select.input{appearance:none;-webkit-appearance:none}
+.pw{position:relative}
+.pw .input{padding-right:48px}
+.pw button{position:absolute;right:6px;top:6px;width:34px;height:34px;border:0;border-radius:8px;background:transparent;cursor:pointer;font-size:1rem;opacity:.8}
+.err{min-height:1.3em;color:#fca5a5;font-weight:500;font-size:.9rem;margin:8px 0 12px;text-align:center}
+.credit{text-align:center;color:var(--faint);font-size:.85rem;margin-top:16px}
+.credit b{color:var(--cream);font-family:var(--disp);letter-spacing:.1em}
+
+/* ---------- shell ---------- */
+#app{position:relative;z-index:3}
+.nav{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px max(16px,calc((100vw - 1280px)/2 + 16px));padding-top:max(10px,env(safe-area-inset-top));background:rgba(14,14,14,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:11px;min-width:0}
+.brand .logo{width:40px;height:40px;margin:0;border-radius:12px;animation:none}
+.brand .logo .i{width:20px;height:20px}
+.brand h1{font:700 1.1rem/1.1 var(--disp);letter-spacing:.05em;white-space:nowrap}
+.brand small{display:block;color:var(--dim);font-size:.72rem;letter-spacing:.04em}
+.nav-r{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.pill{display:inline-flex;align-items:center;gap:7px;min-height:32px;padding:.2rem .7rem;border-radius:999px;border:1px solid var(--line2);background:rgba(255,255,255,.04);font-size:.8rem;font-weight:600;color:var(--text);text-decoration:none;white-space:nowrap}
+.pill.live{color:#bbf7d0;border-color:rgba(34,197,94,.45);background:rgba(34,197,94,.09)}
+.pill.off{color:#fecaca;border-color:rgba(239,68,68,.45);background:rgba(239,68,68,.09)}
+.pill.hs{color:#1c150d;background:linear-gradient(135deg,#F5E6D3,#D4C4A8);border-color:transparent}
+.pill.tg{color:#bae6fd;border-color:rgba(125,211,252,.4);background:rgba(125,211,252,.08)}
+a.pill:hover{filter:brightness(1.2)}
+.ecg{width:34px;height:14px;overflow:visible}
+.ecg path{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:60;stroke-dashoffset:60;animation:ecg 1.8s linear infinite}
+@keyframes ecg{to{stroke-dashoffset:-60}}
+.wrap{max-width:1280px;margin:0 auto;padding:22px 16px 40px}
+
+/* ---------- hero ---------- */
+.hero{display:grid;grid-template-columns:1.25fr 1fr;gap:18px;margin-bottom:18px}
+.card{position:relative;border-radius:20px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+.hero-main{padding:28px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--cream2);font-size:.78rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+.hero-main h2{font:800 clamp(1.7rem,4.2vw,2.6rem)/1.08 var(--disp);margin:10px 0 10px;background:linear-gradient(180deg,#fff 20%,#D4C4A8);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-main p{color:var(--dim);max-width:46ch;margin-bottom:20px}
+.cta{display:flex;gap:10px;flex-wrap:wrap}
+.steps{padding:22px;display:grid;gap:12px;align-content:center}
+.step{display:flex;gap:14px;align-items:center;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.03)}
+.step b{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#F5E6D3,#D4C4A8);color:#1c150d;font:800 .95rem var(--disp);flex:none}
+.step span{font-size:.92rem;color:var(--text)}
+.step small{display:block;color:var(--dim);font-size:.8rem}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:18px}
+.stat{padding:16px 18px;border-radius:16px;border:1px solid var(--line);background:var(--card);position:relative;overflow:hidden}
+.stat::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:3px;background:linear-gradient(180deg,#F5E6D3,#D4C4A8)}
+.stat span{display:block;color:var(--dim);font-size:.78rem;font-weight:500;letter-spacing:.04em}
+.stat strong{display:block;margin-top:4px;font:700 1.6rem/1.1 var(--disp);color:var(--text)}
+.stat em{display:block;margin-top:2px;font-style:normal;color:var(--faint);font-size:.78rem}
+.stat.g strong{color:#86efac}
+.sec{padding:18px;margin-bottom:18px}
+.sec-h{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.sec-h h3{display:flex;align-items:center;gap:10px;font:700 1.15rem var(--disp);letter-spacing:.02em}
+.sec-h h3 .i{color:var(--cream2)}
+.tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.search{display:flex;align-items:center;gap:8px;min-height:38px;padding:0 12px;border-radius:11px;border:1px solid var(--line2);background:rgba(0,0,0,.3)}
+.search input{background:none;border:0;outline:0;min-width:140px;width:100%;font-size:.9rem}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{min-height:34px;padding:.2rem .75rem;border-radius:999px;border:1px solid var(--line2);background:rgba(255,255,255,.03);color:var(--dim);font-size:.82rem;font-weight:600;cursor:pointer;transition:.2s}
+.seg button:hover{color:var(--text);border-color:rgba(255,255,255,.3)}
+.seg button.on{background:linear-gradient(135deg,#F5E6D3,#D4C4A8);color:#1c150d;border-color:transparent}
+
+/* ---------- guild cards ---------- */
+.ggrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:14px}
+.gc{padding:16px;border-radius:18px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.02));transition:transform .25s,border-color .25s,box-shadow .25s;animation:rise .5s both}
+.gc:hover{transform:translateY(-3px);border-color:rgba(245,230,211,.4);box-shadow:0 18px 40px -22px rgba(245,230,211,.4)}
+.gc-top{display:flex;gap:14px;align-items:center}
+.ring{--p:0;position:relative;display:grid;place-items:center;width:62px;height:62px;flex:none;border-radius:50%;background:conic-gradient(#F5E6D3 calc(var(--p)*1%),rgba(255,255,255,.09) 0)}
+.ring::before{content:"";position:absolute;inset:5px;border-radius:50%;background:#171717}
+.ring b{position:relative;font:700 .92rem var(--disp)}
+.gc h4{font:700 1.05rem var(--disp);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gmeta{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:3px;color:var(--dim);font-size:.82rem}
+.gmeta code{font-family:var(--mono);font-size:.78rem;color:var(--cream2)}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:.08rem .55rem;border-radius:999px;border:1px solid var(--line2);font-size:.74rem;font-weight:600;color:var(--text);background:rgba(255,255,255,.04)}
+.chip.on{color:#bbf7d0;border-color:rgba(34,197,94,.45);background:rgba(34,197,94,.08)}
+.mini{display:inline-grid;place-items:center;width:24px;height:24px;border:0;border-radius:7px;background:transparent;color:var(--dim);cursor:pointer}
+.mini:hover{color:var(--text);background:rgba(255,255,255,.08)}
+.gc-body{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.kv{padding:9px 11px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.22)}
+.kv span{display:block;color:var(--dim);font-size:.72rem;letter-spacing:.03em}
+.kv strong{font:700 1.02rem var(--disp)}
+.kv strong.g{color:#86efac}
+.bar{height:6px;border-radius:9px;background:rgba(255,255,255,.08);margin-top:6px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,#F5E6D3,#D4C4A8);transition:width .8s}
+.bar.full i{background:linear-gradient(90deg,#fb7185,#ef4444)}
+.spark{display:block;width:100%;height:30px;margin-top:6px}
+.spark polyline{fill:none;stroke:#86efac;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.spark path{fill:rgba(134,239,172,.12);stroke:none}
+.gc-foot{display:flex;gap:8px;margin-top:12px;justify-content:flex-end}
+.empty{grid-column:1/-1;display:grid;justify-items:center;gap:12px;padding:40px 12px;color:var(--dim);text-align:center}
+.empty .i{width:42px;height:42px;color:var(--cream2)}
+
+/* ---------- owner table ---------- */
+.tscroll{overflow-x:auto;border-radius:14px;border:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;min-width:780px;font-size:.88rem}
+th{padding:10px 12px;text-align:left;color:var(--dim);font-weight:600;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;background:rgba(255,255,255,.03);border-bottom:1px solid var(--line)}
+td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+tr:hover td{background:rgba(255,255,255,.025)}
+td .nm{font-weight:600}
+td code{font-family:var(--mono);font-size:.78rem;color:var(--cream2)}
+.st{display:inline-flex;align-items:center;gap:6px;padding:.1rem .6rem;border-radius:999px;font-size:.74rem;font-weight:700;border:1px solid}
+.st.online{color:#86efac;border-color:rgba(34,197,94,.45);background:rgba(34,197,94,.08)}
+.st.match{color:#1c150d;border-color:transparent;background:linear-gradient(135deg,#F5E6D3,#D4C4A8)}
+.st.search{color:#fde68a;border-color:rgba(251,191,36,.45);background:rgba(251,191,36,.08)}
+.st.paused{color:var(--dim);border-color:var(--line2);background:rgba(255,255,255,.04)}
+.st.error{color:#fca5a5;border-color:rgba(239,68,68,.5);background:rgba(239,68,68,.09)}
+.acts{display:flex;gap:6px;justify-content:flex-end}
+
+/* ---------- logs ---------- */
+.term{border-radius:14px;border:1px solid var(--line2);background:#0a0a0a;overflow:hidden}
+.term-h{display:flex;align-items:center;gap:10px;padding:9px 14px;background:rgba(255,255,255,.04);border-bottom:1px solid var(--line);color:var(--dim);font:.78rem var(--mono)}
+.dots{display:flex;gap:6px}.dots i{width:10px;height:10px;border-radius:50%;background:#ef4444}.dots i:nth-child(2){background:#fbbf24}.dots i:nth-child(3){background:#22c55e}
+.term-h .cnt{margin-left:auto;color:var(--cream2)}
+.term-b{height:330px;overflow:auto;padding:12px 14px;font:.82rem/1.6 var(--mono);overscroll-behavior:contain}
+.term-b::-webkit-scrollbar{width:8px}.term-b::-webkit-scrollbar-thumb{background:rgba(255,255,255,.18);border-radius:8px}
+.log{display:flex;gap:10px;animation:rise .3s both}
+.log-t{color:var(--faint);flex:none}
+.log-m{word-break:break-word;color:#d9d4c9}
+.log-m.success{color:#86efac}.log-m.error{color:#fca5a5}.log-m.warning{color:#fde68a}
+.caret{display:inline-block;width:7px;height:1em;background:var(--cream);vertical-align:-2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.foot{text-align:center;color:var(--faint);padding:10px 0 0}
+.foot b{color:var(--cream);font-family:var(--disp);letter-spacing:.12em}
+.social{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.foot .social,.login-card .social{justify-content:center;margin-top:12px}
+.soc{display:inline-flex;align-items:center;gap:7px;min-height:34px;padding:.2rem .75rem;border-radius:999px;border:1px solid var(--line2);background:rgba(255,255,255,.04);color:var(--text);text-decoration:none;font-size:.8rem;font-weight:600;transition:.2s}
+.soc:hover{transform:translateY(-2px);background:rgba(255,255,255,.1)}
+.soc.yt .i{color:#fca5a5}.soc.tg .i{color:#7dd3fc}.soc.tt .i{color:#86efac}
+
+/* ---------- modals ---------- */
+.modal{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:18px;background:rgba(0,0,0,.66);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);opacity:0;pointer-events:none;transition:opacity .25s}
+.modal.active{opacity:1;pointer-events:auto}
+.sheet{width:min(520px,100%);max-height:92vh;overflow:auto;padding:24px;border-radius:22px;background:linear-gradient(180deg,#1c1c1c,#121212);border:1px solid var(--line2);box-shadow:0 40px 90px -20px #000;transform:translateY(16px) scale(.97);transition:transform .3s cubic-bezier(.2,.9,.2,1)}
+.modal.active .sheet{transform:none}
+.sheet h3{display:flex;align-items:center;gap:10px;font:700 1.2rem var(--disp);margin-bottom:4px}
+.sheet h3 .i{color:var(--cream2)}
+.lead{color:var(--dim);font-size:.92rem;margin-bottom:16px}
+.field{margin-bottom:14px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.picker{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.picker.c2{grid-template-columns:repeat(2,1fr)}
+.picker.c3{grid-template-columns:repeat(3,1fr)}
+.opt{display:grid;gap:1px;justify-items:center;padding:10px 6px;border-radius:12px;border:1px solid var(--line2);background:rgba(255,255,255,.03);cursor:pointer;transition:.2s;color:var(--text)}
+.opt b{font:700 .98rem var(--disp);letter-spacing:.03em}
+.opt small{color:var(--dim);font-size:.7rem}
+.opt:hover{border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.07)}
+.opt[aria-checked=true]{border-color:#F5E6D3;background:rgba(245,230,211,.12);box-shadow:0 0 0 1px #F5E6D3 inset}
+.slot{padding:10px 12px;border-radius:12px;border:1px solid var(--line2);background:rgba(255,255,255,.03);color:var(--dim);font-size:.88rem;margin-bottom:14px;min-height:42px}
+.slot.ok{border-color:rgba(34,197,94,.5);color:#bbf7d0;background:rgba(34,197,94,.07)}
+.slot.bad{border-color:rgba(239,68,68,.55);color:#fecaca;background:rgba(239,68,68,.08)}
+.foot-a{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:6px}
+.hint{color:var(--dim);font-size:.82rem;margin-top:6px}
+.sw{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border-radius:12px;border:1px solid var(--line2);background:rgba(255,255,255,.03);cursor:pointer}
+.sw input{appearance:none;-webkit-appearance:none;width:42px;height:24px;border-radius:99px;background:rgba(255,255,255,.15);position:relative;cursor:pointer;transition:.2s;flex:none}
+.sw input::after{content:"";position:absolute;left:3px;top:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s}
+.sw input:checked{background:#22c55e}.sw input:checked::after{left:21px}
+.hr{height:1px;background:var(--line);margin:16px 0}
+.sec-t{display:flex;align-items:center;gap:8px;font:700 .95rem var(--disp);margin:2px 0 10px;color:var(--cream)}
+.tgbox{padding:12px;border-radius:14px;border:1px solid var(--line2);background:rgba(125,211,252,.04);margin-bottom:12px}
+.drop{display:grid;place-items:center;gap:6px;text-align:center;padding:24px 12px;margin-bottom:14px;border-radius:14px;border:1.5px dashed var(--line2);background:rgba(255,255,255,.025);color:var(--dim);cursor:pointer;transition:.25s}
+.drop:hover,.drop.over{border-color:var(--cream);background:rgba(245,230,211,.07)}
+.drop .i{width:30px;height:30px;color:var(--cream2)}.drop b{color:var(--text)}
+.result{padding:10px 12px;border-radius:12px;border:1px solid rgba(34,197,94,.45);background:rgba(34,197,94,.08);color:#bbf7d0;margin-bottom:12px;font-size:.9rem}
+.toasts{position:fixed;right:16px;bottom:16px;z-index:90;display:grid;gap:10px;max-width:min(360px,calc(100vw - 32px))}
+.toast{display:flex;gap:10px;align-items:center;padding:12px 14px;border-radius:14px;background:#1a1a1a;border:1px solid var(--line2);box-shadow:0 18px 40px -16px #000;animation:rise .35s both;font-size:.92rem;font-weight:500}
+.toast.success{border-color:rgba(34,197,94,.55)}.toast.success .i{color:#4ade80}
+.toast.error{border-color:rgba(239,68,68,.6)}.toast.error .i{color:#f87171}
+.toast.hide{opacity:0;transform:translateX(16px);transition:.3s}
+.spin{animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+
+@media(max-width:1000px){.hero{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:640px){
+  .nav{flex-wrap:wrap}.brand small{display:none}.nav-r .soc span,.nav-r .pill.tg span{display:none}
+  .stats{grid-template-columns:repeat(2,1fr)}.hero-main{padding:20px}.ggrid{grid-template-columns:1fr}
+  .row2{grid-template-columns:1fr}.picker{grid-template-columns:repeat(3,1fr)}.cta .btn{flex:1 1 100%}
+  .term-b{height:290px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:.01ms!important}}
+
+/* ═══════════════ CRYSTAL UI · black + white glass · spring motion ═══════════════ */
+:root{
+  --bg:#000; --bg2:#0A0A0A; --card:rgba(255,255,255,.04); --card2:rgba(255,255,255,.07);
+  --line:rgba(255,255,255,.08); --line2:rgba(255,255,255,.20);
+  --cream:#fff; --cream2:#D4D4D4; --text:#fff; --dim:#A1A1A1; --faint:#6B6B6B;
+  --sans:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif; --disp:"Inter",system-ui,-apple-system,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --spring:cubic-bezier(.34,1.56,.64,1);
+  --glass:linear-gradient(135deg,rgba(255,255,255,.055) 0%,rgba(255,255,255,.012) 100%);
+  --glass-sh:inset 0 1px 0 rgba(255,255,255,.08),inset 0 -1px 0 rgba(0,0,0,.45),0 14px 44px rgba(0,0,0,.75);
+}
+html{scroll-behavior:smooth}
+body{background:#000;background-image:radial-gradient(1100px 700px at 12% -10%,rgba(255,255,255,.05),transparent 60%),radial-gradient(900px 600px at 88% 0%,rgba(255,255,255,.03),transparent 60%);background-attachment:fixed;-webkit-font-smoothing:antialiased;letter-spacing:-.005em}
+::selection{background:rgba(255,255,255,.35);color:#000}
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:8px}::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.4)}
+:focus-visible{outline:2px solid rgba(255,255,255,.55);outline-offset:3px}
+.glow{opacity:.05}.g1{background:radial-gradient(circle,#fff,transparent 66%)}.g2{background:radial-gradient(circle,#b8b8b8,transparent 66%)}
+.gridbg{opacity:.3}
+
+/* buttons */
+.btn{border-radius:12px;font-weight:600;letter-spacing:.01em;transition:transform 220ms var(--spring),background .2s,border-color .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px)}.btn:active{transform:scale(.94);transition-duration:100ms}
+.btn::after{opacity:0}.btn-green::after,.btn-cream::after{opacity:1;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.7) 50%,transparent 70%)}
+.btn-green,.btn-cream{background:#fff;color:#000;border:none;font-weight:800;letter-spacing:.03em;box-shadow:0 8px 24px rgba(255,255,255,.15),inset 0 1px 0 rgba(255,255,255,.9)}
+.btn-green:hover,.btn-cream:hover{background:#F0F0F0;box-shadow:0 12px 30px rgba(255,255,255,.22),inset 0 1px 0 #fff}
+.btn-red{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3);box-shadow:none}
+.btn-red:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.55);box-shadow:none}
+.btn-ghost{background:rgba(255,255,255,.035);border:1px solid var(--line);color:#fff}
+.btn-ghost:hover{background:rgba(255,255,255,.09);border-color:var(--line2)}
+.btn-ghost-red{background:transparent;border:1px solid rgba(255,255,255,.18);color:var(--dim);font-weight:700}
+.btn-ghost-red:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.4);color:#fff}
+.ico-btn,.ico-btn.red:hover,.ico-btn.green:hover{border-radius:10px}
+.ico-btn.red:hover{color:#fff;border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.08)}
+
+/* glass surfaces */
+.card,.gc,.stat,.step,.login-card,.plan,.feat div,.tgbox,.lstep,.ucard{background:var(--glass);border:1px solid var(--line);box-shadow:var(--glass-sh);-webkit-backdrop-filter:blur(32px) saturate(0%);backdrop-filter:blur(32px) saturate(0%)}
+.sheet{background:linear-gradient(135deg,#161616,#0A0A0A);border:1px solid rgba(255,255,255,.12);box-shadow:var(--glass-sh),0 40px 90px -20px #000}
+.modal{background:rgba(0,0,0,.78);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.login-card{border:1px solid rgba(255,255,255,.12);border-radius:22px}
+.gc{border-radius:18px}.gc:hover{border-color:rgba(255,255,255,.35);box-shadow:var(--glass-sh),0 18px 40px -22px rgba(255,255,255,.28)}
+.stat::before{background:linear-gradient(180deg,#fff,#6b6b6b)}
+.term{background:#050505;border-color:rgba(255,255,255,.12)}
+.toast{background:#0c0c0c;border-color:rgba(255,255,255,.16)}
+.nav{background:rgba(0,0,0,.85);-webkit-backdrop-filter:blur(32px) saturate(0%);backdrop-filter:blur(32px) saturate(0%);border-bottom:1px solid rgba(255,255,255,.06);box-shadow:0 6px 24px rgba(0,0,0,.55)}
+.logo{background:#fff;color:#000;border-radius:12px;box-shadow:0 6px 22px rgba(255,255,255,.18)}
+.brand .logo{background:#fff}.brand .logo .i{color:#000}
+.brand h1,.brand-xl{font-weight:900;letter-spacing:.02em}.brand small{font-family:var(--mono);letter-spacing:.14em;color:var(--faint)}
+
+/* form fields */
+.lbl,.field>label{font-family:var(--mono);font-size:.66rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.field:focus-within>label{color:#fff}
+.input,select.input,textarea.input{border-radius:14px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.03);font-family:var(--mono);font-size:.92rem;box-shadow:inset 0 1px 0 rgba(255,255,255,.04);transition:all 240ms var(--spring)}
+.input:focus{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.05);box-shadow:0 0 0 4px rgba(255,255,255,.06),inset 0 1px 0 rgba(255,255,255,.1);transform:translateY(-1px)}
+.input::placeholder{color:#404040}
+select option{background:#0A0A0A;color:#fff}
+.pw button{filter:grayscale(1)}
+
+/* pills / status / chips (monochrome chrome, tiny semantic dots kept for status) */
+.pill{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.14)}
+.pill.hs{background:#fff;color:#000;border-color:transparent}
+.pill.tg{color:#fff;border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.06)}
+.st.match{background:#fff;color:#000}
+.seg button.on{background:#fff;color:#000;border-color:transparent;font-weight:800}
+.chip.on{color:#fff;border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.1)}
+.bar i{background:linear-gradient(90deg,#fff,#8a8a8a)}
+.ring{background:conic-gradient(#fff calc(var(--p)*1%),rgba(255,255,255,.09) 0)}
+.ring::before{background:#0a0a0a}
+.opt[aria-checked=true]{border-color:#fff;background:rgba(255,255,255,.1);box-shadow:0 0 0 1px #fff inset}
+.sw input:checked{background:#fff}.sw input:checked::after{background:#000}
+.drop:hover,.drop.over{border-color:#fff;background:rgba(255,255,255,.06)}
+.step b,.lstep b{background:#fff;color:#000}
+th{font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase}
+.hero-main h2{background:linear-gradient(180deg,#fff 30%,#8a8a8a);-webkit-background-clip:text;background-clip:text}
+
+/* start page (landing) */
+.land{gap:34px}
+.lhero{padding:42px 20px 8px}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:9px;padding:.34rem .95rem;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);font-family:var(--mono);font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.hero-eyebrow .pip{width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 0 0 rgba(255,255,255,.6);animation:pip 2s infinite}
+@keyframes pip{70%{box-shadow:0 0 0 8px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
+.lhero h2{font-weight:900;letter-spacing:-.03em;font-size:clamp(2.1rem,6.4vw,3.9rem);line-height:1.02;margin:18px 0 12px}
+.lhero h2 em{background:linear-gradient(90deg,#fff,#7a7a7a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lhero p{font-size:1.02rem}
+.trial-badge{border-color:rgba(255,255,255,.28);background:rgba(255,255,255,.07);color:#fff;font-family:var(--mono);letter-spacing:.08em;margin-bottom:6px}
+.hero-note{margin-top:14px;font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;color:var(--faint)}
+.sect-h{text-align:center;display:grid;gap:6px;justify-items:center}
+.sect-h .ey{font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+.sect-h h3{font-weight:900;letter-spacing:-.02em;font-size:clamp(1.5rem,4vw,2.2rem);margin:0}
+.sect-h h3 em{font-style:normal;color:var(--dim)}
+.feat div{border-radius:18px;padding:18px;transition:transform 260ms var(--spring),border-color .2s}
+.feat div:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.28)}
+.feat b{font-weight:800}
+.lsteps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.lstep{padding:18px;border-radius:18px;display:grid;gap:6px}
+.lstep .n{font:900 2rem var(--disp);color:rgba(255,255,255,.18);letter-spacing:-.04em}
+.lstep b{display:block;background:none;color:#fff;width:auto;height:auto;font:800 1rem var(--disp)}
+.lstep span{color:var(--dim);font-size:.88rem}
+.plan{border-radius:22px;padding:24px 20px}
+.plan.hot{border-color:rgba(255,255,255,.55);box-shadow:var(--glass-sh),0 24px 60px -28px rgba(255,255,255,.35)}
+.plan .tag{background:#fff;color:#000;font-family:var(--mono);letter-spacing:.08em}
+.plan li::before{color:#fff}
+.plan .pr{font-weight:900;letter-spacing:-.03em}
+.contact{padding:16px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.025)}
+.uidchip{font-family:var(--mono);letter-spacing:.14em;color:#fff}
+
+/* login tabs */
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.03);margin:2px 0 14px}
+.tab{min-height:40px;border-radius:10px;border:none;background:transparent;color:var(--dim);font-weight:700;font-size:.86rem;cursor:pointer;transition:all 240ms var(--spring)}
+.tab:hover{color:#fff}.tab.on{background:#fff;color:#000;box-shadow:0 6px 18px rgba(255,255,255,.14)}
+.lg-hint{margin-top:12px;text-align:center;color:var(--faint);font-size:.78rem;line-height:1.45}
+.lg-hint b{color:var(--dim)}
+
+/* users + premium */
+.sheet.wide{width:min(820px,100%)}
+.ustats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
+.ustats div{padding:12px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.03);text-align:center}
+.ustats b{display:block;font:900 1.6rem var(--disp);letter-spacing:-.03em}.ustats span{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.pkrow{display:flex;align-items:center;gap:10px;justify-content:space-between;flex-wrap:wrap;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.03);margin-bottom:8px}
+.pkrow code,.keybox code{font-family:var(--mono);font-weight:700;letter-spacing:.04em;color:#fff;word-break:break-all}
+.pkrow small{color:var(--dim)}
+.keybox{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.06);margin:10px 0}
+.tag-p{display:inline-block;padding:.05rem .5rem;border-radius:999px;font-family:var(--mono);font-size:.64rem;font-weight:700;letter-spacing:.08em;border:1px solid rgba(255,255,255,.2)}
+.tag-p.prem{background:#fff;color:#000;border-color:transparent}
+a.btn,a.pill,a.soc{text-decoration:none}
+.sheet .sec-t{margin-top:18px}
+.brand-xl{background:linear-gradient(180deg,#fff 35%,#9a9a9a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tabs{margin-top:16px}
+.plan .btn{margin-top:10px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body data-role="">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></symbol>
+  <symbol id="i-bot" viewBox="0 0 24 24"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></symbol>
+  <symbol id="i-crown" viewBox="0 0 24 24"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7z"/><path d="M5 20h14"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="i-out" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+  <symbol id="i-term" viewBox="0 0 24 24"><path d="m4 17 6-6-6-6"/><path d="M12 19h8"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></symbol>
+  <symbol id="i-sync" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3z"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><path d="M14 2v6h6"/></symbol>
+  <symbol id="i-ghost" viewBox="0 0 24 24"><path d="M9 10h.01"/><path d="M15 10h.01"/><path d="M12 2a8 8 0 0 0-8 8v12l3-3 2.5 2.5L12 19l2.5 2.5L17 19l3 3V10a8 8 0 0 0-8-8z"/></symbol>
+  <symbol id="i-yt" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="m10 9 5 3-5 3z"/></symbol>
+  <symbol id="i-tg" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></symbol>
+  <symbol id="i-tt" viewBox="0 0 24 24"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></symbol>
+</svg>
+
+<canvas id="dust" aria-hidden="true"></canvas>
+<div class="glow g1"></div><div class="glow g2"></div><div class="gridbg"></div>
+
+<!-- ============ LOGIN ============ -->
+<main id="login" hidden>
+  <section class="land" id="landing">
+    <div class="lhero">
+      <div class="hero-eyebrow"><span class="pip"></span> All regions · CS + BR · Free trial</div>
+      <h2>Build your guild glory<br><em>on autopilot</em></h2>
+      <p><b>FREE:</b> 3 guilds × 4 bots each &nbsp;·&nbsp; <b>PREMIUM 400 TK:</b> 10 guilds × 8 bots each.<br>Send your guild ID, pick a region and a bot count. The bots join, play Clash Squad and Battle Royale matches and push your glory up, 24/7.</p>
+      <div class="cta2">
+        <button class="btn btn-green xl" type="button" id="startNow">🚀 Start now</button>
+        <a class="btn btn-ghost xl" id="trialBtn" target="_blank" rel="noopener noreferrer" href="https://t.me/hasib_hii">🎁 Free trial available</a>
+      </div>
+      <div class="hero-note">Owner · HASIB Coder &nbsp;|&nbsp; Buy Premium: DM @hasib_hii on Telegram</div>
+    </div>
+    <div class="sect-h"><span class="ey">Features</span><h3>Built for <em>speed</em></h3></div>
+    <div class="feat">
+      <div><b>⚔️ CS + BR matches</b><span>Owner switches Clash Squad and Battle Royale on or off at any time.</span></div>
+      <div><b>⚡ Fast match switching</b><span>The next match is searched the moment one ends.</span></div>
+      <div><b>🌍 All regions</b><span>BD, IND, PK, TW, ID, ME, SG, TH, VN, BR, NA and more.</span></div>
+      <div><b>🤝 Auto friend accept</b><span>Every bot accepts friend requests by itself.</span></div>
+      <div><b>🎭 Auto character, emote &amp; bio</b><span>Bots equip the emote and carry the owner bio.</span></div>
+      <div><b>👋 Group welcome</b><span>Anyone who joins the group gets an emote and a welcome message.</span></div>
+      <div><b>✈️ Telegram bot + web panel</b><span>Control everything from the web or from Telegram.</span></div>
+      <div><b>📈 Live stats</b><span>Guild level, EXP, bots online and live logs.</span></div>
+    </div>
+    <div class="sect-h"><span class="ey">How it works</span><h3>Up and running in <em>4 steps</em></h3></div>
+    <div class="lsteps">
+      <div class="lstep"><span class="n">01</span><b>Sign in</b><span>Use your name and the access password.</span></div>
+      <div class="lstep"><span class="n">02</span><b>Add your guild</b><span>Enter the guild ID, region and bots per guild.</span></div>
+      <div class="lstep"><span class="n">03</span><b>Bots play</b><span>They join, queue CS / BR and keep moving in matches.</span></div>
+      <div class="lstep"><span class="n">04</span><b>Watch it grow</b><span>Live guild level and EXP in your dashboard.</span></div>
+    </div>
+    <div class="sect-h"><span class="ey">Pricing</span><h3>Simple, <em>transparent</em> plans</h3></div>
+    <div class="plans" id="plans"></div>
+    <div class="contact" id="contactRow"></div>
+  </section>
+  <form class="login-card" id="loginForm" novalidate>
+    <div class="logo"><svg class="i"><use href="#i-bolt"/></svg></div>
+    <h1 class="brand-xl">HASIB X GLORY</h1>
+    <div class="tabs" role="tablist" aria-label="Login type">
+      <button type="button" class="tab on" id="tabUser" role="tab" aria-selected="true">👤 User login</button>
+      <button type="button" class="tab" id="tabAdmin" role="tab" aria-selected="false">🛡️ Admin login</button>
+    </div>
+    <p class="sub" id="lgSub">Enter your name and your password.</p>
+    <div id="lgNameWrap">
+      <label class="lbl" for="lgName">Your name</label>
+      <input class="input" id="lgName" type="text" maxlength="20" autocomplete="username" autocapitalize="words" spellcheck="false" placeholder="Your name" style="margin-bottom:12px">
+    </div>
+    <label class="lbl" for="lgPass" id="lgPassLbl">Password</label>
+    <div class="pw">
+      <input class="input" id="lgPass" type="password" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Password">
+      <button type="button" id="lgEye" aria-label="Show password">👁</button>
+    </div>
+    <div class="err" id="lgErr" role="alert"></div>
+    <button class="btn btn-green xl block" id="lgBtn" type="submit">Sign in</button>
+    <p class="lg-hint" id="lgHint"><b>Free</b> · 3 guilds × 4 bots &nbsp;|&nbsp; <b>Premium 400 TK</b> · 10 guilds × 8 bots<br>Use the premium password you got from the owner to unlock Premium. DM <b>@hasib_hii</b></p>
+    <div class="social" data-social></div>
+    <p class="credit">Crafted by <b>HASIB CODER</b></p>
+  </form>
+</main>
+
+<!-- ============ APP ============ -->
+<div id="app" hidden>
+  <header class="nav">
+    <div class="brand">
+      <div class="logo"><svg class="i"><use href="#i-bolt"/></svg></div>
+      <div><h1>HASIB X GLORY</h1><small>GUILD GLORY ENGINE</small></div>
+    </div>
+    <div class="nav-r">
+      <span class="pill live" id="livePill"><svg class="ecg" viewBox="0 0 34 14"><path d="M0 7h8l3-6 4 12 3-6h16"/></svg><span id="liveText">LIVE</span></span>
+      <span class="pill hs" id="hsPill">⚡ HS MODE</span>
+      <span class="pill hs" id="modePill" hidden>⚔️ CS</span>
+      <a class="pill tg" id="tgPill" href="#" target="_blank" rel="noopener noreferrer" hidden>✈️ <span id="tgText">Telegram bot</span></a>
+      <span class="pill" id="rolePill">👤 User</span>
+      <div class="social" data-social></div>
+      <button class="btn btn-ghost sm" id="btnLogout" type="button"><svg class="i"><use href="#i-out"/></svg>Logout</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="card hero-main">
+        <span class="eyebrow">⚡ Squad matches · non-stop</span>
+        <h2>Add bots to any guild. They squad up and farm EXP 24/7.</h2>
+        <p>Enter a guild ID, pick the region and how many bots. They join your guild, form squads, play matches back to back and keep going until you stop them.</p>
+        <div class="cta">
+          <button class="btn btn-green xl" id="btnBots" type="button">🟢 Add bots <kbd style="opacity:.55;font:600 .7rem var(--mono);border:1px solid currentColor;border-radius:5px;padding:0 5px">A</kbd></button>
+          <button class="btn btn-ghost xl owner-only" id="btnSettings" type="button">⚙️ Settings</button>
+          <button class="btn btn-ghost xl owner-only" id="btnUsers" type="button">👥 Users &amp; Premium</button>
+          <button class="btn btn-cream xl owner-only" id="btnUpload" type="button">📤 Upload accounts</button>
+        </div>
+      </div>
+      <div class="card steps">
+        <div class="step"><b>1</b><div><span>Send the guild ID</span><small>Numbers only, 5 to 15 digits</small></div></div>
+        <div class="step"><b>2</b><div><span>Pick the region</span><small>BD · IND · PK · TW and more</small></div></div>
+        <div class="step"><b>3</b><div><span>Pick 4 or 8 bots</span><small>They start playing at once</small></div></div>
+      </div>
+    </section>
+
+    <section class="stats" aria-label="Overview">
+      <div class="stat"><span>GUILDS</span><strong id="s-guilds">0</strong><em id="s-guilds-n">with bots</em></div>
+      <div class="stat"><span>BOTS ONLINE</span><strong id="s-bots">0</strong><em id="s-bots-n">of 0 bots</em></div>
+      <div class="stat g"><span>EXP FARMED</span><strong id="s-exp">+0</strong><em id="s-exp-r">~0 / hour</em></div>
+      <div class="stat"><span>MATCHES</span><strong id="s-matches">0</strong><em id="s-matches-r">0 started</em></div>
+      <div class="stat"><span>UPTIME</span><strong id="s-up">00:00:00</strong><em id="s-gen" hidden>creating accounts...</em><em id="s-hs">HS mode</em></div>
+    </section>
+
+    <section class="card sec" aria-label="Guilds">
+      <div class="sec-h">
+        <h3><svg class="i"><use href="#i-crown"/></svg>Guilds</h3>
+        <div class="tools">
+          <label class="search"><svg class="i"><use href="#i-search"/></svg><input id="gSearch" type="search" placeholder="Search guild ID or name" autocomplete="off" aria-label="Search guilds"></label>
+          <div class="seg" id="gFilter"></div>
+          <button class="btn btn-ghost sm" id="btnJoin" type="button">🔗 Re-join</button>
+        </div>
+      </div>
+      <div class="ggrid" id="guilds"></div>
+    </section>
+
+    <section class="card sec owner-only" aria-label="Bots">
+      <div class="sec-h">
+        <h3><svg class="i"><use href="#i-bot"/></svg>Bots <span class="chip" id="botCount">0</span></h3>
+        <div class="tools">
+          <label class="search"><svg class="i"><use href="#i-search"/></svg><input id="bSearch" type="search" placeholder="Search name, UID, guild" autocomplete="off" aria-label="Search bots"></label>
+          <button class="btn btn-ghost sm" id="btnPauseAll" type="button">⏸ Pause all</button>
+        </div>
+      </div>
+      <div class="tscroll"><table>
+        <thead><tr><th>Bot</th><th>UID</th><th>Guild</th><th>Lv</th><th>EXP</th><th>Status</th><th></th></tr></thead>
+        <tbody id="bots"></tbody>
+      </table></div>
+    </section>
+
+    <section class="card sec" aria-label="Live logs">
+      <div class="sec-h">
+        <h3><svg class="i"><use href="#i-term"/></svg>Live logs</h3>
+        <div class="tools">
+          <div class="seg" id="lFilter"><button class="on" data-f="all" type="button">All</button><button data-f="match" type="button">Matches</button><button data-f="exp" type="button">EXP</button><button data-f="err" type="button">Errors</button></div>
+          <button class="btn btn-ghost sm" id="btnScroll" type="button">⬇ Auto-scroll on</button>
+          <button class="btn btn-ghost-red sm owner-only" id="btnClear" type="button">🔴 Clear</button>
+        </div>
+      </div>
+      <div class="term">
+        <div class="term-h"><span class="dots"><i></i><i></i><i></i></span><span>hasib-x-glory@live:~#</span><span class="cnt" id="logCount">0 lines</span></div>
+        <div class="term-b" id="console" role="log" aria-live="off"></div>
+      </div>
+    </section>
+
+    <div class="foot"><p>All credit to <b>HASIB CODER</b></p><div class="social" data-social></div></div>
+  </main>
+</div>
+
+<!-- ============ MODALS ============ -->
+<div class="modal" id="botsModal" aria-hidden="true">
+  <form class="sheet" id="botsForm" novalidate>
+    <h3><svg class="i"><use href="#i-bot"/></svg>Add bots</h3>
+    <p class="lead">Enter the guild, pick a region and how many bots. Nothing else is needed.</p>
+    <div class="field"><label class="lbl" for="botGuild">Guild ID</label><input class="input" id="botGuild" inputmode="numeric" autocomplete="off" maxlength="15" placeholder="Enter guild ID"></div>
+    <div class="field"><label class="lbl" id="regLbl">Region</label><div class="picker" id="regionPick" role="radiogroup" aria-labelledby="regLbl"></div></div>
+    <div class="field"><label class="lbl" id="cntLbl">How many bots</label><div class="picker c2" id="countPick" role="radiogroup" aria-labelledby="cntLbl"></div></div>
+    <div class="field owner-only"><label class="lbl" id="srcLbl">Accounts (owner)</label>
+      <div class="picker c2" id="sourcePick" role="radiogroup" aria-labelledby="srcLbl">
+        <button type="button" role="radio" class="opt" data-v="auto" aria-checked="true"><b>🤖 Auto</b><small>ready first, then new</small></button>
+        <button type="button" role="radio" class="opt" data-v="create" aria-checked="false"><b>🛠 Create new</b><small>fresh guest accounts</small></button>
+      </div></div>
+    <div class="field owner-only"><label class="lbl" for="botCustom">Owner: custom amount (no limit)</label><input class="input" id="botCustom" type="number" min="1" inputmode="numeric" placeholder="Leave empty to use the buttons above"></div>
+    <div class="slot" id="slotInfo" aria-live="polite"></div>
+    <div class="foot-a">
+      <button type="button" class="btn btn-ghost-red" data-close="botsModal">🔴 Cancel</button>
+      <button type="submit" class="btn btn-green" id="botsSubmit">🟢 Start bots</button>
+    </div>
+  </form>
+</div>
+
+<div class="modal" id="uploadModal" aria-hidden="true">
+  <div class="sheet">
+    <h3><svg class="i"><use href="#i-up"/></svg>Upload accounts</h3>
+    <p class="lead">Owner only. Add JSON or TXT files with UID and password to a region. They join the ready pool right away.</p>
+    <div class="field"><label class="lbl" id="upRegLbl">Region of these files</label><div class="picker" id="upRegionPick" role="radiogroup" aria-labelledby="upRegLbl"></div></div>
+    <label class="drop" id="upDrop" for="upFile" tabindex="0"><svg class="i"><use href="#i-file"/></svg><span><b id="upName">Click to choose files</b><br>or drop .json / .txt files here (many at once)</span></label>
+    <input type="file" id="upFile" accept=".json,.txt,application/json,text/plain" multiple hidden>
+    <div class="result" id="upResult" hidden></div>
+    <div class="foot-a">
+      <button type="button" class="btn btn-ghost-red" data-close="uploadModal">🔴 Close</button>
+      <button type="button" class="btn btn-green" id="upSubmit" disabled>📤 Upload to pool</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="usersModal" aria-hidden="true">
+  <div class="sheet wide">
+    <h3>👥 Users &amp; Premium</h3>
+    <p class="lead">Owner only. Everyone who signed in with a name is listed here.</p>
+    <div class="ustats"><div><b id="uTotal">0</b><span>Users</span></div><div><b id="uPrem">0</b><span>Premium</span></div><div><b id="uFree">0</b><span>Free</span></div></div>
+    <div class="sec-t">💎 Create a premium password</div>
+    <div class="row2">
+      <div class="field"><label for="pkLabel">Name / note (optional)</label><input class="input" id="pkLabel" maxlength="20" placeholder="Who is it for?"></div>
+      <div class="field"><label for="pkDays">Days (0 = forever)</label><input class="input" id="pkDays" type="number" min="0" max="3650" inputmode="numeric" value="30"></div>
+    </div>
+    <div class="field"><label for="pkCustom">Your own password (optional, leave empty to auto create)</label><input class="input" id="pkCustom" maxlength="30" autocomplete="off" placeholder="e.g. rafi-vip-1"></div>
+    <button class="btn btn-green block" id="pkCreate" type="button">💎 Create premium password</button>
+    <div class="keybox" id="pkNew" hidden><code id="pkNewKey"></code><button class="btn btn-ghost sm" id="pkCopy" type="button">📋 Copy</button></div>
+    <p class="hint">A premium password locks to the first name that signs in with it, so it cannot be shared. Deleting it sends that user back to the Free plan.</p>
+    <div class="sec-t">🔑 Premium passwords</div>
+    <div id="pkList"><p class="hint">Loading…</p></div>
+    <div class="sec-t">🙋 Users</div>
+    <div class="tscroll"><table><thead><tr><th>Name</th><th>Plan</th><th>Guilds</th><th>Logins</th><th>Last seen</th></tr></thead><tbody id="uBody"></tbody></table></div>
+    <div class="foot-a"><button type="button" class="btn btn-ghost sm" id="uRefresh">↻ Refresh</button><button type="button" class="btn btn-ghost-red" data-close="usersModal">Close</button></div>
+  </div>
+</div>
+
+<div class="modal" id="settingsModal" aria-hidden="true">
+  <div class="sheet">
+    <h3><svg class="i"><use href="#i-gear"/></svg>Settings</h3>
+    <p class="lead">Owner only. These apply to the web panel and the Telegram bot.</p>
+    <div class="sec-t">🤖 Limits</div>
+    <div class="row2">
+      <div class="field"><label class="lbl" for="setLimit">Bots per guild (users)</label><input class="input" id="setLimit" type="number" min="1" max="50" inputmode="numeric"></div>
+      <div class="field"><label class="lbl" for="setTgGuilds">Guilds per Telegram user</label><input class="input" id="setTgGuilds" type="number" min="1" max="100" inputmode="numeric"></div>
+    </div>
+    <div class="sec-t">🛠 Auto-create accounts</div>
+    <div class="row2">
+      <div class="field"><label class="lbl" for="setName">Nickname prefix</label><input class="input" id="setName" maxlength="7" autocomplete="off"></div>
+      <div class="field"><label class="lbl" for="setPass">Password prefix</label><input class="input" id="setPass" maxlength="20" autocomplete="off"></div>
+    </div>
+    <label class="sw"><span>Auto-create accounts when ready ones run out</span><input type="checkbox" id="setAuto"></label>
+    <div class="hr"></div>
+    <div class="sec-t">⚔️ Match modes (owner)</div>
+    <label class="sw"><span>⚔️ Clash Squad (CS) matches</span><input type="checkbox" id="setCS"></label>
+    <label class="sw"><span>🪂 Battle Royale (BR) matches</span><input type="checkbox" id="setBR"></label>
+    <label class="sw"><span>⚡ Fast match switching (next match right after one ends)</span><input type="checkbox" id="setFast"></label>
+    <label class="sw"><span>📝 Auto set Bio on every bot</span><input type="checkbox" id="setBio"></label>
+    <label class="sw"><span>🏆 CS Rank mode (needs cs_rank_packet.hex)</span><input type="checkbox" id="setCSRank"></label>
+    <label class="sw"><span>👥 CS in squads of 4 (experimental)</span><input type="checkbox" id="setCSSquad"></label>
+    <label class="sw"><span>🤝 Auto accept friend requests</span><input type="checkbox" id="setFriend"></label>
+    <label class="sw"><span>👋 Welcome message when someone joins the group</span><input type="checkbox" id="setWelcome"></label>
+    <label class="sw"><span>🎭 Emote when someone joins / a match starts</span><input type="checkbox" id="setEmote"></label>
+    <p class="hint">CS and BR can be switched on or off any time, bots follow within seconds. With both ON the squads alternate CS, BR, CS... With both OFF the bots wait.</p>
+    <p class="hint">Users cannot set names or passwords. These prefixes are used for every created account.</p>
+    <div class="hr"></div>
+    <div class="sec-t">✈️ Telegram bot</div>
+    <div class="tgbox">
+      <p id="tgInfo" class="lead" style="margin-bottom:10px">...</p>
+      <div class="field" style="margin-bottom:10px"><label class="lbl" for="tgToken">Bot token (from @BotFather)</label><input class="input" id="tgToken" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="123456789:AAxxxxxxxx"></div>
+      <div class="foot-a" style="justify-content:flex-start">
+        <button type="button" class="btn btn-green sm" id="tgSave">🟢 Save token &amp; start</button>
+        <button type="button" class="btn btn-green sm" id="tgOn">▶ Turn ON</button>
+        <button type="button" class="btn btn-red sm" id="tgOff">⏹ Turn OFF</button>
+      </div>
+    </div>
+    <div class="foot-a">
+      <button type="button" class="btn btn-ghost-red" data-close="settingsModal">🔴 Close</button>
+      <button type="button" class="btn btn-green" id="setSave">🟢 Save settings</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="editModal" aria-hidden="true">
+  <form class="sheet" id="editForm" novalidate>
+    <h3><svg class="i"><use href="#i-edit"/></svg>Edit bot</h3>
+    <p class="lead">Owner only. The name changes how the bot appears here. A new UID or password restarts the bot.</p>
+    <div class="field"><label class="lbl" for="edName">Bot name (panel)</label><input class="input" id="edName" maxlength="24" autocomplete="off"></div>
+    <div class="row2">
+      <div class="field"><label class="lbl" for="edUid">UID</label><input class="input" id="edUid" inputmode="numeric" autocomplete="off"></div>
+      <div class="field"><label class="lbl" for="edPass">New password</label><input class="input" id="edPass" type="text" autocomplete="off" placeholder="leave empty to keep"></div>
+    </div>
+    <div class="foot-a">
+      <button type="button" class="btn btn-ghost-red" data-close="editModal">🔴 Cancel</button>
+      <button type="submit" class="btn btn-green" id="edSubmit">🟢 Save</button>
+    </div>
+  </form>
+</div>
+
+<div class="modal" id="confirmModal" aria-hidden="true">
+  <div class="sheet">
+    <h3><svg class="i"><use href="#i-warn"/></svg>Are you sure?</h3>
+    <p class="lead" id="confirmMsg"></p>
+    <div class="foot-a">
+      <button type="button" class="btn btn-green" id="confirmNo">🟢 Keep</button>
+      <button type="button" class="btn btn-red" id="confirmYes">🔴 Yes, do it</button>
+    </div>
+  </div>
+</div>
+
+<div class="toasts" id="toastBox" aria-live="polite"></div>
+
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const esc = s => s == null ? "" : String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+const ico = (n, c="") => `<svg class="i ${c}"><use href="#i-${n}"/></svg>`;
+const FLAGS = {BD:"🇧🇩", IND:"🇮🇳", PK:"🇵🇰", TW:"🇹🇼", ID:"🇮🇩", ME:"🇸🇦", SG:"🇸🇬", TH:"🇹🇭", VN:"🇻🇳", BR:"🇧🇷", NA:"🇺🇸", US:"🇺🇸", RU:"🇷🇺", SAC:"🌎"};
+/* ===== PRICES: edit these numbers to your real prices (shown on the start page) ===== */
+const PLANS = [
+  {name:"Free", price:"FREE", per:"forever", hot:false, items:["3 guilds","4 bots in each guild","CS + BR matches","Auto friend accept","Free trial available"]},
+  {name:"Premium", price:"400 TK", per:"premium", hot:true, items:["10 guilds","8 bots in each guild","CS + BR matches · fast match switching","All regions","Priority support from the owner"]}
+];
+const OWNER_FF_UID = "2799233875";
+const BUY_LINK = "https://t.me/hasib_hii";   // DM on Telegram to buy
+
+const SOCIAL = [
+  {cls:"yt", icon:"yt", name:"YouTube",  handle:"@hasib_hi", url:"https://www.youtube.com/@hasib_hi"},
+  {cls:"tg", icon:"tg", name:"Telegram", handle:"@hasib_hii", url:"https://t.me/hasib_hii"},
+  {cls:"tt", icon:"tt", name:"TikTok",   handle:"@hasib_hi",  url:"https://www.tiktok.com/@hasib_hi"}
+];
+const tokenStore = {
+  get(){ try{ return localStorage.getItem("hxg_tok") || ""; }catch(e){ return ""; } },
+  set(v){ try{ if(v) localStorage.setItem("hxg_tok", v); else localStorage.removeItem("hxg_tok"); }catch(e){} }
+};
+const state = {token: tokenStore.get(), role:null, guilds:[], accounts:[], logs:[], pool:{}, regions:["BD","IND","PK","TW"], poolRegions:[], max:8, choices:[4,8],
+  autoGen:true, tg:{}, settings:null, hs:true, creating:false, hist:{}, loaded:false, online:true, up:null, upAt:0, gFilter:"all", logFilter:"all"};
+let autoScroll = true, pollTimer = null, inflight = false, confirmRes = null, rendering = false, logSig = "", gSig = "", bSig = "";
+const clientStart = Date.now();
+const isOwner = () => state.role === "owner";
+function rolePillText(){
+  if(isOwner()) return "👑 Owner";
+  const pr = state.role === "premium", pl = state.plans || {free:[3,4], premium:[10,8]}, l = pr ? pl.premium : pl.free;
+  return (pr ? "💎 Premium" : "🆓 Free") + " · " + l[0] + " guilds · " + l[1] + " bots";
+}
+
+function renderLanding(){
+  const pl = $("plans"); if(!pl) return;
+  pl.innerHTML = PLANS.map(p => `<div class="plan${p.hot ? " hot" : ""}">${p.hot ? '<span class="tag">POPULAR</span>' : ""}<b>${p.name}</b><div class="pr">${p.price} <small>${p.per}</small></div><ul>${p.items.map(i => `<li>${i}</li>`).join("")}</ul><a class="btn ${p.price === "FREE" ? "btn-green" : "btn-cream"} block" target="_blank" rel="noopener noreferrer" href="${BUY_LINK}">${p.price === "FREE" ? "🎁 Start free" : "💳 Buy on Telegram"}</a></div>`).join("");
+  const c = $("contactRow");
+  if(c) c.innerHTML = "Buy Premium: DM <b>@hasib_hii</b> on Telegram &nbsp;·&nbsp; Owner <b>HASIB Coder</b> &nbsp;·&nbsp; Owner FF UID <b class=\"uidchip\">" + OWNER_FF_UID.split("").join(" ") + "</b> &nbsp;·&nbsp; " + SOCIAL.map(x => `<a class="soc ${x.cls}" href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">${esc(x.name)} ${esc(x.handle)}</a>`).join(" ");
+  const sn = $("startNow");
+  if(sn) sn.onclick = () => { const f = $("loginForm"); f.scrollIntoView({behavior:"smooth", block:"center"}); setTimeout(() => ($("lgName").value ? $("lgPass") : $("lgName")).focus({preventScroll:true}), 450); };
+}
+
+function renderSocial(){
+  document.querySelectorAll("[data-social]").forEach(box => {
+    box.innerHTML = SOCIAL.map(s => `<a class="soc ${s.cls}" href="${esc(s.url)}" target="_blank" rel="noopener noreferrer" title="${esc(s.name)} ${esc(s.handle)}">${ico(s.icon)}<span>${esc(s.handle)}</span></a>`).join("");
+  });
+}
+
+renderLanding();
+
+/* ---------- background dust ---------- */
+(function(){
+  const c = $("dust"), g = c.getContext("2d");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let W, H, dpr, pts = [], raf;
+  function size(){
+    dpr = Math.min(2, devicePixelRatio || 1); W = c.width = innerWidth * dpr; H = c.height = innerHeight * dpr;
+    const n = Math.round(Math.min(70, Math.max(24, innerWidth * innerHeight / 30000)));
+    pts = Array.from({length:n}, () => ({x:Math.random()*W, y:Math.random()*H, r:(Math.random()*1.4+.4)*dpr, v:(Math.random()*.25+.05)*dpr, a:Math.random()*.4+.1}));
+  }
+  function frame(){
+    g.clearRect(0,0,W,H);
+    for(const p of pts){
+      if(!reduce){ p.y -= p.v; if(p.y < -4) { p.y = H + 4; p.x = Math.random()*W; } }
+      g.beginPath(); g.arc(p.x, p.y, p.r, 0, 6.283); g.fillStyle = `rgba(245,230,211,${p.a})`; g.fill();
+    }
+    if(!reduce) raf = requestAnimationFrame(frame);
+  }
+  size(); frame();
+  addEventListener("resize", () => { cancelAnimationFrame(raf); size(); frame(); });
+  document.addEventListener("visibilitychange", () => { if(reduce) return; if(document.hidden) cancelAnimationFrame(raf); else frame(); });
+})();
+
+/* ---------- toast / modal ---------- */
+function toast(msg, type="info"){
+  const box = $("toastBox"); while(box.children.length >= 4) box.firstChild.remove();
+  const el = document.createElement("div"); el.className = "toast " + type;
+  el.innerHTML = ico(type === "success" ? "check" : type === "error" ? "warn" : "info") + `<span>${esc(msg)}</span>`;
+  box.appendChild(el);
+  setTimeout(() => { el.classList.add("hide"); setTimeout(() => el.remove(), 350); }, 3800);
+}
+function openModal(id){ const m = $(id); m.classList.add("active"); m.setAttribute("aria-hidden","false"); setTimeout(() => { const f = m.querySelector("input:not([hidden]):not([type=file]):not([type=checkbox]),select"); if(f) f.focus({preventScroll:true}); }, 80); }
+function closeModal(id){
+  const m = $(id); if(!m.classList.contains("active")) return;
+  m.classList.remove("active"); m.setAttribute("aria-hidden","true");
+  if(id === "confirmModal" && confirmRes){ const r = confirmRes; confirmRes = null; r(false); }
+}
+document.querySelectorAll(".modal").forEach(m => m.addEventListener("click", e => { if(e.target === m) closeModal(m.id); }));
+document.querySelectorAll("[data-close]").forEach(b => b.addEventListener("click", () => closeModal(b.dataset.close)));
+document.addEventListener("keydown", e => {
+  if(e.key === "Escape"){ const o = [...document.querySelectorAll(".modal.active")].pop(); if(o) closeModal(o.id); return; }
+  const t = e.target && e.target.tagName;
+  if((e.key === "a" || e.key === "A") && !e.ctrlKey && !e.metaKey && !e.altKey && !["INPUT","TEXTAREA","SELECT"].includes(t) && !$("app").hidden && !document.querySelector(".modal.active")) openBots();
+});
+function confirmDialog(msg){ $("confirmMsg").textContent = msg; openModal("confirmModal"); return new Promise(r => { confirmRes = r; }); }
+$("confirmNo").addEventListener("click", () => closeModal("confirmModal"));
+$("confirmYes").addEventListener("click", () => { if(confirmRes){ const r = confirmRes; confirmRes = null; r(true); } closeModal("confirmModal"); });
+
+/* ---------- api ---------- */
+async function api(url, body){
+  const headers = {"Content-Type":"application/json"}; if(state.token) headers["X-Auth"] = state.token;
+  const opt = {method: body === undefined ? "GET" : "POST", headers, credentials:"same-origin", cache:"no-store"};
+  if(body !== undefined) opt.body = JSON.stringify(body);
+  const r = await fetch(url, opt);
+  let d = {}; try{ d = await r.json(); }catch(e){}
+  if(r.status === 401 && url !== "/api/login"){ showLogin("Session ended. Please sign in again."); throw new Error("auth"); }
+  if(!r.ok && !d.error) d.error = "HTTP " + r.status;
+  return d;
+}
+const busy = new Set();
+async function guard(key, fn){ if(busy.has(key)) return; busy.add(key); try{ await fn(); } finally{ busy.delete(key); } }
+const netErr = e => { if(!e || e.message !== "auth") toast("Backend connection failed", "error"); };
+
+/* ---------- auth ---------- */
+function showLogin(msg){
+  clearInterval(pollTimer); pollTimer = null; state.token = ""; tokenStore.set("");
+  $("app").hidden = true; $("login").hidden = false; document.body.dataset.role = "";
+  $("lgErr").textContent = msg || ""; $("lgPass").value = "";
+  /* focus only after the user chose to sign in (Start now / tab click). Auto focus on load scrolled the page past the start page. */
+}
+function enterApp(info){
+  state.role = info.role === "owner" ? "owner" : (info.role === "premium" ? "premium" : "user");
+  document.body.dataset.role = state.role;
+  state.name = info.name || "";
+  $("rolePill").textContent = (state.name && state.role !== "owner" ? state.name + " · " : "") + rolePillText();
+  $("login").hidden = true; $("app").hidden = false;
+  try{ window.scrollTo(0, 0); }catch(e){}
+  fetchStats(true);
+  clearInterval(pollTimer);
+  pollTimer = setInterval(() => { if(!document.hidden) fetchStats(); }, 2500);
+}
+let lgMode = "user";
+function setLgMode(m){
+  lgMode = m;
+  $("tabUser").classList.toggle("on", m === "user"); $("tabAdmin").classList.toggle("on", m === "admin");
+  $("tabUser").setAttribute("aria-selected", m === "user"); $("tabAdmin").setAttribute("aria-selected", m === "admin");
+  $("lgNameWrap").hidden = m === "admin";
+  $("lgSub").textContent = m === "admin" ? "Admin access. Enter the admin password." : "Enter your name and your password.";
+  $("lgPassLbl").textContent = m === "admin" ? "Admin password" : "Password";
+  $("lgHint").hidden = m === "admin"; $("lgErr").textContent = "";
+  setTimeout(() => (m === "admin" ? $("lgPass") : ($("lgName").value ? $("lgPass") : $("lgName"))).focus({preventScroll:true}), 40);
+}
+$("tabUser").addEventListener("click", () => setLgMode("user"));
+$("tabAdmin").addEventListener("click", () => setLgMode("admin"));
+try{ $("lgName").value = localStorage.getItem("hxg_name") || ""; }catch(e){}
+$("lgEye").addEventListener("click", () => { const i = $("lgPass"); i.type = i.type === "password" ? "text" : "password"; });
+$("loginForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const password = $("lgPass").value.trim(), name = $("lgName").value.trim();
+  if(lgMode === "user" && name.length < 2){ $("lgErr").textContent = "Enter your name (at least 2 letters)."; $("lgName").focus(); return; }
+  if(!password){ $("lgErr").textContent = lgMode === "admin" ? "Enter the admin password." : "Enter your password."; return; }
+  const b = $("lgBtn"); b.disabled = true; $("lgErr").textContent = "";
+  try{
+    const d = await api("/api/login", {mode: lgMode, name, password});
+    if(d.ok && lgMode === "user"){ try{ localStorage.setItem("hxg_name", name); }catch(e){} }
+    if(d.ok){ $("lgPass").value = ""; if(d.token){ state.token = d.token; tokenStore.set(d.token); } enterApp(d); }
+    else $("lgErr").textContent = d.error || "Login failed";
+  }catch(err){ $("lgErr").textContent = "Cannot reach the backend. Is main.py running?"; }
+  finally{ b.disabled = false; }
+});
+$("btnLogout").addEventListener("click", async () => { try{ await api("/api/logout", {}); }catch(e){} showLogin(""); });
+(async function boot(){
+  try{
+    const r = await fetch("/api/me", {credentials:"same-origin", cache:"no-store", headers: state.token ? {"X-Auth": state.token} : {}});
+    if(r.ok){ const d = await r.json(); if(d.ok) return enterApp(d); }
+  }catch(e){}
+  showLogin("");
+})();
+
+/* ---------- numbers ---------- */
+const tween = {};
+function setNum(id, v, fmt){
+  const el = $(id); if(!el) return;
+  const to = Math.round(Number(v) || 0), from = Number(el.dataset.n || 0), f = fmt || (x => x.toLocaleString());
+  if(from === to){ el.textContent = f(to); return; }
+  el.dataset.n = to; const t0 = performance.now(); cancelAnimationFrame(tween[id]);
+  const step = now => { const k = Math.min(1, (now - t0) / 650), e = 1 - Math.pow(1 - k, 3); el.textContent = f(Math.round(from + (to - from) * e)); if(k < 1) tween[id] = requestAnimationFrame(step); };
+  tween[id] = requestAnimationFrame(step);
+}
+function fmtUp(sec){ const p = n => String(n).padStart(2, "0"); sec = Math.max(0, Math.floor(sec)); return `${p(Math.floor(sec/3600))}:${p(Math.floor(sec%3600/60))}:${p(sec%60)}`; }
+
+/* ---------- overview ---------- */
+function renderOverview(d){
+  setNum("s-guilds", state.guilds.length);
+  setNum("s-bots", d.total_online || 0); $("s-bots-n").textContent = `of ${d.total_accounts || 0} bots`;
+  setNum("s-exp", d.total_gained_exp || 0, x => "+" + x.toLocaleString()); $("s-exp-r").textContent = `~${Number(d.exp_per_hour || 0).toLocaleString()} / hour`;
+  setNum("s-matches", d.total_matches || 0); $("s-matches-r").textContent = `${Number(d.total_matches_started || 0).toLocaleString()} started · ${d.total_active_matches || 0} live`;
+  $("s-gen").hidden = !d.creating; $("s-hs").hidden = !!d.creating;
+  $("hsPill").hidden = !state.hs;
+  if(d.modes){ const m = d.modes, t = (m.cs ? "⚔️ CS" : "") + (m.cs && m.br ? " + " : "") + (m.br ? "🪂 BR" : ""); $("modePill").textContent = t || "⏸ modes off"; $("modePill").hidden = false; }
+  const tg = state.tg || {}, pill = $("tgPill");
+  if(tg.running && tg.username){ pill.hidden = false; pill.href = "https://t.me/" + tg.username; $("tgText").textContent = "@" + tg.username; }
+  else if(isOwner() && !tg.has_token){ pill.hidden = false; pill.href = "#"; $("tgText").textContent = "Set Telegram token"; }
+  else pill.hidden = true;
+}
+function setLive(on){ state.online = on; const p = $("livePill"); p.classList.toggle("off", !on); p.classList.toggle("live", on); $("liveText").textContent = on ? "LIVE" : "OFFLINE"; }
+
+/* ---------- guilds ---------- */
+function histSvg(h){
+  if(!h || h.length < 2) return `<svg class="spark" viewBox="0 0 100 30" preserveAspectRatio="none"><polyline points="0,26 100,26"/></svg>`;
+  const mn = Math.min(...h), mx = Math.max(...h), span = Math.max(1, mx - mn);
+  const pts = h.map((v, i) => `${(i / (h.length - 1) * 100).toFixed(1)},${(26 - (v - mn) / span * 22).toFixed(1)}`);
+  return `<svg class="spark" viewBox="0 0 100 30" preserveAspectRatio="none"><path d="M0,30 L${pts.join(" L")} L100,30 Z"/><polyline points="${pts.join(" ")}"/></svg>`;
+}
+function guildCard(g, i){
+  const pct = Math.min(100, g.bots / Math.max(1, state.max) * 100), full = g.bots >= state.max && !isOwner();
+  const name = g.name ? esc(g.name) : "Guild " + esc(String(g.guild_id).slice(-4));
+  const reg = g.region || "";
+  return `<article class="gc" style="animation-delay:${Math.min(i, 8) * 40}ms" data-gid="${esc(g.guild_id)}">
+    <div class="gc-top">
+      <div class="ring" style="--p:${pct.toFixed(0)}"><b>${g.level ? "Lv" + g.level : "—"}</b></div>
+      <div style="min-width:0;flex:1">
+        <h4>${name}</h4>
+        <div class="gmeta"><code>${esc(g.guild_id)}</code><button class="mini" data-act="copy" title="Copy guild ID" aria-label="Copy guild ID">${ico("copy")}</button>
+          ${reg ? `<span class="chip">${FLAGS[reg] || "🌍"} ${esc(reg)}</span>` : ""}
+          ${g.online > 0 ? `<span class="chip on">● ${g.online} online</span>` : ""}</div>
+      </div>
+    </div>
+    <div class="gc-body">
+      <div class="kv"><span>BOTS</span><strong>${g.bots}${isOwner() ? "" : "/" + state.max}</strong><div class="bar ${full ? "full" : ""}"><i style="width:${pct.toFixed(0)}%"></i></div></div>
+      <div class="kv"><span>EXP FARMED</span><strong class="g">+${Number(g.exp_gained || 0).toLocaleString()}</strong>${histSvg(state.hist[g.guild_id])}</div>
+    </div>
+    <div class="gc-foot owner-only"><button class="btn btn-ghost-red sm" data-act="rmguild">🔴 Remove bots</button></div>
+  </article>`;
+}
+function renderFilters(){
+  const regs = [...new Set(state.guilds.map(g => g.region).filter(Boolean))];
+  const sig = regs.join(",") + "|" + state.gFilter; const box = $("gFilter");
+  if(box._sig === sig) return; box._sig = sig;
+  if(state.gFilter !== "all" && !regs.includes(state.gFilter)) state.gFilter = "all";
+  box.innerHTML = [`<button data-f="all" class="${state.gFilter === "all" ? "on" : ""}" type="button">All</button>`]
+    .concat(regs.map(r => `<button data-f="${esc(r)}" class="${state.gFilter === r ? "on" : ""}" type="button">${FLAGS[r] || "🌍"} ${esc(r)}</button>`)).join("");
+}
+function renderGuilds(){
+  state.guilds.forEach(g => { const h = state.hist[g.guild_id] || (state.hist[g.guild_id] = []); h.push(Number(g.exp_gained || 0)); if(h.length > 40) h.shift(); });
+  renderFilters();
+  const q = ($("gSearch").value || "").toLowerCase().trim();
+  const list = state.guilds.filter(g => (state.gFilter === "all" || g.region === state.gFilter) && (!q || String(g.guild_id).includes(q) || String(g.name || "").toLowerCase().includes(q)));
+  const sig = JSON.stringify([list.map(g => [g.guild_id, g.name, g.level, g.region, g.bots, g.online, g.exp_gained]), state.max, state.role, (state.hist[list[0] && list[0].guild_id] || []).length]);
+  if(sig === gSig) return; gSig = sig;
+  $("guilds").innerHTML = list.length ? list.map(guildCard).join("")
+    : `<div class="empty">${ico("ghost")}<div>${state.guilds.length ? "No guild matches that filter." : "No guilds yet. Press Add bots, enter a guild ID and pick a region."}</div>${state.guilds.length ? "" : '<button class="btn btn-green" data-act="bots">🟢 Add bots</button>'}</div>`;
+}
+$("gSearch").addEventListener("input", () => { gSig = ""; renderGuilds(); });
+$("gFilter").addEventListener("click", e => { const b = e.target.closest("button[data-f]"); if(!b) return; state.gFilter = b.dataset.f; $("gFilter")._sig = ""; gSig = ""; renderGuilds(); });
+$("guilds").addEventListener("click", async e => {
+  const b = e.target.closest("[data-act]"); if(!b) return;
+  if(b.dataset.act === "bots") return openBots();
+  const card = b.closest(".gc"); if(!card) return; const gid = card.dataset.gid;
+  if(b.dataset.act === "copy") return copyText(gid);
+  if(b.dataset.act === "rmguild"){
+    if(!isOwner()) return;
+    if(!await confirmDialog(`Stop and remove every bot in guild ${gid}?`)) return;
+    guard("rmg" + gid, async () => {
+      try{ const d = await api("/api/guild/remove", {guild_id: gid}); if(d.ok){ toast(`Removed ${d.removed} bot(s)`, "success"); gSig = ""; fetchStats(); } else toast(d.error || "Failed", "error"); }catch(err){ netErr(err); }
+    });
+  }
+});
+$("btnJoin").addEventListener("click", () => guard("join", async () => {
+  try{ const d = await api("/api/guild/join", {}); if(d.ok) toast("Join request sent for every bot", "success"); else toast(d.error || "Failed", "error"); }catch(e){ netErr(e); }
+}));
+
+/* ---------- owner: bots table ---------- */
+function catOf(a){
+  if(a.is_paused || a.status === "PAUSED") return ["paused", "PAUSED"];
+  const s = String(a.status || "ONLINE");
+  if(s.indexOf("IN_MATCH") === 0) return ["match", "IN MATCH"];
+  if(s === "ONLINE") return ["online", "ONLINE"];
+  if(s === "SEARCHING") return ["search", "SEARCHING"];
+  return ["error", s];
+}
+function renderBots(){
+  if(!isOwner()) return;
+  const q = ($("bSearch").value || "").toLowerCase().trim();
+  const list = state.accounts.filter(a => !q || String(a.uid).includes(q) || String(a.nickname || "").toLowerCase().includes(q) || String(a.guild_id || "").includes(q));
+  $("botCount").textContent = state.accounts.length;
+  const sig = JSON.stringify(list.map(a => [a.uid, a.nickname, a.level, a.status, a.is_paused, a.gained_exp, a.guild_id, a.region]));
+  const allPaused = state.accounts.length && state.accounts.every(a => catOf(a)[0] === "paused");
+  $("btnPauseAll").textContent = allPaused ? "▶ Resume all" : "⏸ Pause all";
+  if(sig === bSig) return; bSig = sig;
+  $("bots").innerHTML = list.length ? list.map(a => {
+    const [c, label] = catOf(a), uid = String(a.uid);
+    return `<tr data-uid="${esc(uid)}" data-auth="${esc(a.auth_uid || "")}">
+      <td><span class="nm">${esc(a.nickname || "Unknown")}</span> <span class="chip">${FLAGS[a.region] || "🌍"} ${esc(a.region || "")}</span></td>
+      <td><code>${esc(uid)}</code> <button class="mini" data-act="copy" aria-label="Copy UID">${ico("copy")}</button></td>
+      <td><code>${esc(a.guild_id || "-")}</code></td>
+      <td>${esc(a.level || 1)}</td>
+      <td>+${Number(a.gained_exp || 0).toLocaleString()}</td>
+      <td><span class="st ${c}">${esc(label)}</span></td>
+      <td><div class="acts">
+        <button class="ico-btn" data-act="edit" title="Edit" aria-label="Edit">${ico("edit")}</button>
+        <button class="ico-btn green" data-act="pause" title="${c === "paused" ? "Resume" : "Pause"}" aria-label="Pause or resume">${ico(c === "paused" ? "play" : "pause")}</button>
+        <button class="ico-btn" data-act="restart" title="Restart" aria-label="Restart">${ico("sync")}</button>
+        <button class="ico-btn red" data-act="delete" title="Delete" aria-label="Delete">${ico("trash")}</button>
+      </div></td></tr>`;
+  }).join("") : `<tr><td colspan="7"><div class="empty">${ico("ghost")}<div>No bots yet.</div></div></td></tr>`;
+}
+$("bSearch").addEventListener("input", () => { bSig = ""; renderBots(); });
+let editing = null;
+$("bots").addEventListener("click", async e => {
+  const b = e.target.closest("[data-act]"); if(!b) return;
+  const tr = b.closest("tr"); if(!tr || !isOwner()) return;
+  const uid = tr.dataset.uid, auth = tr.dataset.auth;
+  const acc = state.accounts.find(a => String(a.uid) === uid);
+  switch(b.dataset.act){
+    case "copy": return copyText(uid);
+    case "edit": editing = {uid, auth}; $("edName").value = acc ? (acc.nickname || "") : ""; $("edUid").value = auth || uid; $("edPass").value = ""; return openModal("editModal");
+    case "pause": return guard("pau" + uid, async () => { try{ const d = await api("/api/account/pause", {uid}); if(d.status === "ok"){ toast(d.is_paused ? "Bot paused" : "Bot resumed", "success"); bSig = ""; fetchStats(); } else toast(d.error || "Failed", "error"); }catch(err){ netErr(err); } });
+    case "restart": return guard("rst" + uid, async () => { try{ toast("Restarting bot"); const d = await api("/api/account/restart", {uid}); if(d.error) toast(d.error, "error"); setTimeout(fetchStats, 900); }catch(err){ netErr(err); } });
+    case "delete":
+      if(!await confirmDialog(`Delete bot ${uid}? It leaves its guild and is removed.`)) return;
+      return guard("del" + uid, async () => { try{ const d = await api("/api/account/delete", {uid, auth_uid: auth}); if(d.status === "ok"){ toast("Bot removed", "success"); bSig = ""; gSig = ""; fetchStats(); } else toast(d.error || "Failed", "error"); }catch(err){ netErr(err); } });
+  }
+});
+$("editForm").addEventListener("submit", e => {
+  e.preventDefault(); if(!editing) return;
+  const body = {uid: editing.uid, auth_uid: editing.auth, alias: $("edName").value.trim()};
+  const nu = $("edUid").value.trim(), np = $("edPass").value.trim();
+  if(nu && nu !== editing.auth && nu !== editing.uid) body.new_uid = nu;
+  if(np) body.new_password = np;
+  guard("edit", async () => {
+    $("edSubmit").disabled = true;
+    try{ const d = await api("/api/account/edit", body);
+      if(d.ok){ closeModal("editModal"); toast(d.restarted ? "Saved. The bot is restarting." : "Saved", "success"); bSig = ""; fetchStats(); } else toast(d.error || "Could not save", "error");
+    }catch(err){ netErr(err); } finally{ $("edSubmit").disabled = false; }
+  });
+});
+$("btnPauseAll").addEventListener("click", () => guard("pauseAll", async () => {
+  try{ const d = await api("/api/account/pause_all", {}); if(d.status === "ok"){ toast(d.all_paused ? "All bots paused" : "All bots resumed", "success"); bSig = ""; fetchStats(); } else toast(d.error || "Failed", "error"); }catch(e){ netErr(e); }
+}));
+
+/* ---------- add bots ---------- */
+const botSel = {region:"BD", count:4, source:"auto"};
+function renderRegionPick(){
+  const regs = state.regions.length ? state.regions : ["BD","IND","PK","TW"];
+  if(!regs.includes(botSel.region)) botSel.region = regs[0];
+  $("regionPick").innerHTML = regs.map(r => {
+    const p = state.pool[r], inPool = state.poolRegions.includes(r);
+    const sub = botSel.source === "create" || !inPool ? "new" : ((p && p.free > 0) ? p.free.toLocaleString() + " ready" : "new");
+    return `<button type="button" role="radio" class="opt" data-v="${esc(r)}" aria-checked="${r === botSel.region}"><b>${FLAGS[r] || "🌍"} ${esc(r)}</b><small>${sub}</small></button>`;
+  }).join("");
+}
+function renderCountPick(){
+  const ch = state.choices && state.choices.length ? state.choices : [4, 8], custom = !!$("botCustom").value;
+  if(!ch.includes(botSel.count)) botSel.count = ch[0];
+  $("countPick").innerHTML = ch.map((n, i) => `<button type="button" role="radio" class="opt" data-v="${n}" aria-checked="${n === botSel.count && !custom}"><b>🤖 ${n} bots</b><small>${i === 0 ? "starter squad" : i === ch.length - 1 ? "full guild" : "squad"}</small></button>`).join("");
+  $("countPick").className = "picker " + (ch.length <= 2 ? "c2" : ch.length === 3 ? "c3" : "");
+}
+function curCount(){ if(isOwner()){ const c = parseInt($("botCustom").value, 10); if(c > 0) return c; } return botSel.count; }
+function guildBots(gid){ const g = state.guilds.find(x => String(x.guild_id) === String(gid)); return g ? g.bots : 0; }
+function updateSlot(){
+  const gid = $("botGuild").value.trim(), box = $("slotInfo"), btn = $("botsSubmit"), n = curCount(), r = botSel.region;
+  const src = isOwner() ? botSel.source : "auto", inPool = state.poolRegions.includes(r), free = inPool ? ((state.pool[r] || {}).free || 0) : 0;
+  box.className = "slot"; btn.disabled = false;
+  if(!/^\d{5,15}$/.test(gid)){ box.textContent = "Enter your guild ID (5 to 15 digits)."; btn.disabled = true; return; }
+  const have = guildBots(gid), after = have + n, room = state.max - have;
+  if(!isOwner() && after > state.max){
+    box.classList.add("bad");
+    box.textContent = room > 0 ? `Guild ${gid} has ${have}/${state.max} bots. You can add ${room} more. Pick a smaller number.` : `Guild ${gid} is full (${have}/${state.max} bots).`;
+    btn.disabled = true; return;
+  }
+  let extra = "";
+  if(src === "create") extra = " All accounts will be created new (about 20 to 30 seconds each).";
+  else if(free >= n) extra = " Ready accounts will be used.";
+  else if(state.autoGen) extra = free > 0 ? ` ${free} ready + ${n - free} new accounts will be created.` : " New accounts will be created automatically.";
+  else if(free === 0){ box.classList.add("bad"); box.textContent = `No ready ${r} accounts and auto-create is off.`; btn.disabled = true; return; }
+  else extra = ` Only ${free} ready accounts exist, so only ${free} will start.`;
+  box.classList.add("ok");
+  box.textContent = `Guild ${gid}: ${have} now, ${after}${isOwner() ? " after this (owner: no limit)" : "/" + state.max + " after this"}.` + extra;
+}
+function refreshBotsModal(){ renderRegionPick(); renderCountPick(); updateSlot(); }
+$("regionPick").addEventListener("click", e => { const b = e.target.closest("[data-v]"); if(!b) return; botSel.region = b.dataset.v; refreshBotsModal(); });
+$("sourcePick").addEventListener("click", e => { const b = e.target.closest("[data-v]"); if(!b) return; botSel.source = b.dataset.v; $("sourcePick").querySelectorAll("[data-v]").forEach(x => x.setAttribute("aria-checked", String(x === b))); refreshBotsModal(); });
+$("countPick").addEventListener("click", e => { const b = e.target.closest("[data-v]"); if(!b) return; botSel.count = parseInt(b.dataset.v, 10); $("botCustom").value = ""; refreshBotsModal(); });
+$("botGuild").addEventListener("input", updateSlot);
+$("botCustom").addEventListener("input", () => { renderCountPick(); updateSlot(); });
+function openBots(){ $("botGuild").value = ""; $("botCustom").value = ""; botSel.source = "auto"; $("sourcePick").querySelectorAll("[data-v]").forEach(x => x.setAttribute("aria-checked", String(x.dataset.v === "auto"))); refreshBotsModal(); openModal("botsModal"); }
+$("btnBots").addEventListener("click", openBots);
+$("botsForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const gid = $("botGuild").value.trim();
+  if(!/^\d{5,15}$/.test(gid)) return toast("Guild ID must be 5 to 15 digits", "error");
+  const payload = {guild_id: gid, region: botSel.region, count: curCount(), source: isOwner() ? botSel.source : "auto"};
+  guard("bots", async () => {
+    const b = $("botsSubmit"); b.disabled = true; b.innerHTML = ico("sync", "spin") + " Starting...";
+    try{
+      const d = await api("/api/bots/add", payload);
+      if(d.ok){
+        closeModal("botsModal");
+        toast(`${d.added} ${d.region} bot(s) starting for guild ${d.guild_id}` + (d.created ? ` (${d.created} new accounts being created)` : "") + (d.short ? ` · ${d.short} short` : ""), "success");
+        gSig = ""; fetchStats(); [3000, 9000, 20000, 40000].forEach(ms => setTimeout(fetchStats, ms));
+      } else toast(d.error || "Could not add bots", "error");
+    }catch(err){ netErr(err); }
+    finally{ b.innerHTML = "🟢 Start bots"; updateSlot(); }
+  });
+});
+
+/* ---------- owner: upload to pool ---------- */
+const upSel = {region:"BD", files:[]};
+function renderUpRegions(){
+  const regs = state.poolRegions.length ? state.poolRegions : ["BD","IND","PK","TW"];
+  if(!regs.includes(upSel.region)) upSel.region = regs[0];
+  $("upRegionPick").innerHTML = regs.map(r => `<button type="button" role="radio" class="opt" data-v="${esc(r)}" aria-checked="${r === upSel.region}"><b>${FLAGS[r] || "🌍"} ${esc(r)}</b><small>${state.pool[r] ? state.pool[r].free.toLocaleString() + " free" : "pool"}</small></button>`).join("");
+  $("upRegionPick").className = "picker " + (regs.length === 4 ? "" : "c3");
+}
+$("upRegionPick").addEventListener("click", e => { const b = e.target.closest("[data-v]"); if(!b) return; upSel.region = b.dataset.v; renderUpRegions(); });
+function renderUpFiles(){
+  const n = upSel.files.length, tot = upSel.files.reduce((a, f) => a + f.text.length, 0);
+  $("upName").textContent = n ? `${n} file(s) ready (${(tot / 1024).toFixed(0)} KB)` : "Click to choose files";
+  $("upSubmit").disabled = !n;
+}
+async function loadUpFiles(list){
+  const out = [];
+  for(const f of Array.from(list || [])){
+    if(f.size > 25 * 1024 * 1024){ toast(`${f.name} is too large (max 25 MB)`, "error"); continue; }
+    try{ out.push({name: f.name, text: await f.text()}); }catch(e){ toast(`Could not read ${f.name}`, "error"); }
+  }
+  upSel.files = out; $("upResult").hidden = true; renderUpFiles();
+}
+$("btnUpload").addEventListener("click", () => { if(!isOwner()) return; upSel.files = []; $("upFile").value = ""; $("upResult").hidden = true; renderUpRegions(); renderUpFiles(); openModal("uploadModal"); });
+$("upFile").addEventListener("change", e => loadUpFiles(e.target.files));
+const upDrop = $("upDrop");
+["dragenter","dragover"].forEach(ev => upDrop.addEventListener(ev, e => { e.preventDefault(); upDrop.classList.add("over"); }));
+["dragleave","drop"].forEach(ev => upDrop.addEventListener(ev, e => { e.preventDefault(); upDrop.classList.remove("over"); }));
+upDrop.addEventListener("drop", e => loadUpFiles(e.dataTransfer.files));
+upDrop.addEventListener("keydown", e => { if(e.key === "Enter" || e.key === " "){ e.preventDefault(); $("upFile").click(); } });
+$("upSubmit").addEventListener("click", () => guard("upload", async () => {
+  const b = $("upSubmit"); b.disabled = true; b.innerHTML = ico("sync", "spin") + " Uploading...";
+  try{
+    const d = await api("/api/pool/upload", {region: upSel.region, files: upSel.files});
+    if(d.ok){
+      const r = $("upResult"); r.hidden = false;
+      r.textContent = `${d.region}: found ${d.found}, ${d.added} new, ${d.duplicates} already known. ${d.region} pool now has ${Number(d.pool_total).toLocaleString()} accounts.`;
+      toast(`${d.added} new ${d.region} account(s) added`, "success"); upSel.files = []; $("upFile").value = ""; renderUpFiles(); fetchStats();
+    } else toast(d.error || "Upload failed", "error");
+  }catch(err){ netErr(err); }
+  finally{ b.innerHTML = "📤 Upload to pool"; b.disabled = !upSel.files.length; }
+}));
+
+/* ---------- owner: settings + telegram ---------- */
+function tgInfoText(){
+  const t = state.tg || {};
+  if(t.running) return `🟢 Online as @${t.username || "bot"}. Token ${t.token_hint || ""}`;
+  if(t.starting) return "🟡 Starting...";
+  if(!t.has_token) return "⚪ No token yet. Paste the token from @BotFather below.";
+  return `🔴 Off${t.wanted === false ? " (switched off by the owner)" : ""}. Token ${t.token_hint || ""}`;
+}
+function fillSettings(){
+  const s = state.settings || {};
+  $("setLimit").value = s.max_per_guild ?? state.max; $("setTgGuilds").value = s.tg_guilds_per_user ?? 5;
+  $("setName").value = s.name_prefix ?? "HASIB"; $("setPass").value = s.pass_prefix ?? "HASIB"; $("setAuto").checked = !!(s.auto_gen ?? state.autoGen);
+  $("setCS").checked = !!s.cs_mode; $("setBR").checked = !!s.br_mode; $("setFast").checked = !!s.fast_mode;
+  $("setBio").checked = !!s.auto_bio; $("setFriend").checked = !!s.auto_friend;
+  $("setWelcome").checked = !!s.auto_welcome; $("setEmote").checked = !!s.auto_emote;
+  $("setCSRank").checked = !!s.cs_rank; $("setCSSquad").checked = !!s.cs_squad;
+  $("tgInfo").textContent = tgInfoText();
+}
+
+/* ---------- users + premium (owner) ---------- */
+const fmtTime = t => { if(!t) return "—"; const d = new Date(t * 1000); return d.toLocaleDateString() + " " + d.toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"}); };
+async function loadUsers(){
+  try{
+    const [u, k] = await Promise.all([api("/api/users"), api("/api/premium/list")]);
+    if(u.ok){
+      $("uTotal").textContent = u.total; $("uPrem").textContent = u.premium; $("uFree").textContent = u.free;
+      $("uBody").innerHTML = u.users.length ? u.users.map(r => `<tr><td class="nm">${esc(r.name)}</td><td><span class="tag-p ${r.tier === "premium" ? "prem" : ""}">${r.tier === "premium" ? "PREMIUM" : "FREE"}</span></td><td>${(r.guilds || []).length}</td><td>${r.logins}</td><td>${esc(fmtTime(r.last))}</td></tr>`).join("") : `<tr><td colspan="5" class="hint">No users yet.</td></tr>`;
+    }
+    if(k.ok){
+      $("pkList").innerHTML = k.keys.length ? k.keys.map(x => `<div class="pkrow"><div><code>${esc(x.key)}</code><br><small>${esc(x.label || "no note")} · ${x.bound ? "used by " + esc(x.bound) : "not used yet"} · ${x.expires ? (x.expired ? "expired" : "until " + esc(fmtTime(x.expires))) : "no expiry"}</small></div><button class="btn btn-ghost-red sm" data-pkdel="${esc(x.key)}" type="button">Delete</button></div>`).join("") : `<p class="hint">No premium passwords yet.</p>`;
+    }
+  }catch(e){ netErr(e); }
+}
+$("btnUsers").addEventListener("click", () => { if(!isOwner()) return; $("pkNew").hidden = true; openModal("usersModal"); loadUsers(); });
+$("uRefresh").addEventListener("click", loadUsers);
+$("pkCreate").addEventListener("click", () => guard("pkcreate", async () => {
+  const b = $("pkCreate"); b.disabled = true;
+  try{
+    const d = await api("/api/premium/create", {label: $("pkLabel").value.trim(), days: parseInt($("pkDays").value || "0", 10), key: $("pkCustom").value.trim()});
+    if(d.ok){ $("pkNewKey").textContent = d.key; $("pkNew").hidden = false; $("pkLabel").value = ""; $("pkCustom").value = ""; toast("Premium password created", "success"); loadUsers(); }
+    else toast(d.error || "Could not create", "error");
+  }catch(e){ netErr(e); } finally{ b.disabled = false; }
+}));
+$("pkCopy").addEventListener("click", async () => { try{ await navigator.clipboard.writeText($("pkNewKey").textContent); toast("Copied", "success"); }catch(e){ toast("Select and copy it by hand", "info"); } });
+$("pkList").addEventListener("click", async e => {
+  const b = e.target.closest("[data-pkdel]"); if(!b) return;
+  if(!(await confirmDialog("Delete this premium password? The user goes back to the Free plan."))) return;
+  try{ const d = await api("/api/premium/delete", {key: b.dataset.pkdel}); if(d.ok){ toast("Deleted", "success"); loadUsers(); } else toast(d.error || "Failed", "error"); }catch(err){ netErr(err); }
+});
+$("btnSettings").addEventListener("click", () => { if(!isOwner()) return; $("tgToken").value = ""; fillSettings(); openModal("settingsModal"); });
+$("setSave").addEventListener("click", () => guard("settings", async () => {
+  const body = {max_per_guild: parseInt($("setLimit").value, 10), tg_guilds_per_user: parseInt($("setTgGuilds").value, 10),
+                name_prefix: $("setName").value.trim(), pass_prefix: $("setPass").value.trim(), auto_gen: $("setAuto").checked,
+                cs_mode: $("setCS").checked, br_mode: $("setBR").checked, fast_mode: $("setFast").checked,
+                auto_bio: $("setBio").checked, auto_friend: $("setFriend").checked,
+                auto_welcome: $("setWelcome").checked, auto_emote: $("setEmote").checked,
+                cs_rank: $("setCSRank").checked, cs_squad: $("setCSSquad").checked};
+  try{ const d = await api("/api/settings/save", body);
+    if(d.ok){ state.settings = d.settings; state.max = d.settings.max_per_guild; state.choices = d.choices || state.choices; toast("Settings saved", "success"); gSig = ""; fetchStats(); }
+    else toast(d.error || "Could not save", "error");
+  }catch(e){ netErr(e); }
+}));
+async function tgAction(action, extra){
+  return guard("tg" + action, async () => {
+    try{
+      const d = await api("/api/tg/set", Object.assign({action}, extra || {}));
+      if(d.tg) state.tg = d.tg;
+      $("tgInfo").textContent = tgInfoText();
+      if(d.ok){ toast(action === "stop" ? "Telegram bot turned OFF" : action === "token" ? "Token saved. Telegram bot starting." : "Telegram bot turned ON", "success"); if(action === "token") $("tgToken").value = ""; setTimeout(fetchStats, 2500); }
+      else toast(d.error || "Failed", "error");
+    }catch(e){ netErr(e); }
+  });
+}
+$("tgSave").addEventListener("click", () => { const t = $("tgToken").value.trim(); if(!t) return toast("Paste the bot token first", "error"); tgAction("token", {token: t}); });
+$("tgOn").addEventListener("click", () => tgAction("start"));
+$("tgOff").addEventListener("click", () => tgAction("stop"));
+$("tgPill").addEventListener("click", e => { if($("tgPill").getAttribute("href") === "#"){ e.preventDefault(); $("btnSettings").click(); } });
+
+/* ---------- live logs ---------- */
+const scrollEnd = () => { const s = $("console"); s.scrollTop = s.scrollHeight; };
+const LOG_ICON = {success:"✅", error:"❌", warning:"⚠️", info:"•"};
+function renderLogs(){
+  let list = state.logs || [];
+  if(state.logFilter === "match") list = list.filter(l => /match|squad/i.test(l.message));
+  else if(state.logFilter === "exp") list = list.filter(l => l.level === "success" || /exp/i.test(l.message));
+  else if(state.logFilter === "err") list = list.filter(l => l.level === "error" || l.level === "warning");
+  const last = list[list.length - 1] || {}, sig = state.logFilter + "|" + list.length + "|" + last.time + "|" + last.message;
+  $("logCount").textContent = list.length + " lines";
+  if(sig === logSig) return; logSig = sig;
+  const s = $("console"), prev = s.scrollTop; rendering = true;
+  s.innerHTML = (list.length ? list.slice(-300).map(l => `<div class="log"><span class="log-t">[${esc(l.time || "00:00:00")}]</span><span class="log-m ${esc(l.level || "info")}">${LOG_ICON[l.level] || "•"} ${esc(l.message || "")}</span></div>`).join("")
+    : '<div class="log"><span class="log-m">Waiting for activity...</span></div>') + '<div class="log"><span class="log-m"><span class="caret"></span></span></div>';
+  if(autoScroll) scrollEnd(); else s.scrollTop = prev;
+  requestAnimationFrame(() => requestAnimationFrame(() => { rendering = false; }));
+}
+$("lFilter").addEventListener("click", e => { const b = e.target.closest("button[data-f]"); if(!b) return; state.logFilter = b.dataset.f; logSig = ""; $("lFilter").querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b)); renderLogs(); });
+$("btnClear").addEventListener("click", () => guard("clear", async () => { try{ const d = await api("/api/logs/clear", {}); if(d.status === "ok"){ state.logs = []; logSig = ""; renderLogs(); toast("Logs cleared", "success"); } }catch(e){ netErr(e); } }));
+function syncScrollBtn(){ $("btnScroll").textContent = autoScroll ? "⬇ Auto-scroll on" : "⏸ Auto-scroll off"; }
+$("btnScroll").addEventListener("click", () => { autoScroll = !autoScroll; syncScrollBtn(); if(autoScroll) scrollEnd(); });
+$("console").addEventListener("scroll", () => {
+  if(rendering) return;
+  const s = $("console"), atEnd = s.scrollHeight - s.scrollTop - s.clientHeight <= 80;
+  if(autoScroll && !atEnd){ autoScroll = false; syncScrollBtn(); } else if(!autoScroll && atEnd){ autoScroll = true; syncScrollBtn(); }
+});
+
+/* ---------- poll ---------- */
+async function fetchStats(manual){
+  if(inflight) return; inflight = true;
+  try{
+    const d = await api("/api/stats");
+    if(d.error && !d.guilds) throw new Error(d.error);
+    state.guilds = Array.isArray(d.guilds) ? d.guilds : [];
+    state.accounts = Array.isArray(d.accounts) ? d.accounts : [];
+    state.logs = Array.isArray(d.logs) ? d.logs : [];
+    state.pool = d.pool || {}; state.regions = Array.isArray(d.regions) && d.regions.length ? d.regions : state.regions;
+    state.poolRegions = Array.isArray(d.pool_regions) ? d.pool_regions : [];
+    state.max = d.max_per_guild || 8; state.choices = Array.isArray(d.count_choices) && d.count_choices.length ? d.count_choices : [4, 8];
+    state.autoGen = d.auto_gen !== false; state.tg = d.tg || {}; state.hs = d.hs_mode !== false; state.creating = !!d.creating;
+    if(d.settings) state.settings = d.settings;
+    if(d.role && d.role !== state.role){ state.role = d.role === "owner" ? "owner" : (d.role === "premium" ? "premium" : "user"); document.body.dataset.role = state.role; }
+    if(d.plans){ state.plans = d.plans; state.maxGuilds = d.max_guilds; }
+    $("rolePill").textContent = rolePillText();
+    if(d.uptime != null && Number.isFinite(Number(d.uptime))){ state.up = Number(d.uptime); state.upAt = Date.now(); }
+    state.loaded = true;
+    renderOverview(d); renderGuilds(); renderBots(); renderLogs(); setLive(true);
+    if($("botsModal").classList.contains("active")) refreshBotsModal();
+    if($("settingsModal").classList.contains("active")) $("tgInfo").textContent = tgInfoText();
+  }catch(e){
+    if(e.message === "auth") return;
+    if(state.online || manual) toast("Backend connection failed", "error");
+    setLive(false);
+  }finally{ inflight = false; }
+}
+
+/* ---------- utils ---------- */
+function copyText(txt){
+  const ok = () => toast("Copied: " + txt, "success");
+  const fb = () => { try{ const ta = document.createElement("textarea"); ta.value = txt; ta.style.cssText = "position:fixed;opacity:0"; document.body.appendChild(ta); ta.select(); const d = document.execCommand("copy"); ta.remove(); d ? ok() : toast(txt); }catch(e){ toast(txt); } };
+  if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(ok, fb); else fb();
+}
+document.addEventListener("visibilitychange", () => { if(!document.hidden && !$("app").hidden) fetchStats(); });
+setInterval(() => {
+  if($("app").hidden) return;
+  const el = state.up != null ? state.up + (Date.now() - state.upAt) / 1000 : (Date.now() - clientStart) / 1000;
+  $("s-up").textContent = fmtUp(el);
+}, 1000);
+renderSocial(); syncScrollBtn();
+</script>
+</body>
+</html>
