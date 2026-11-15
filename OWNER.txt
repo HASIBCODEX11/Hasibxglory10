@@ -1,0 +1,23 @@
+HASIB X GLORY - OWNER
+=====================
+Owner        : HASIB Coder
+Free Fire UID: 2799233875      (2 7 9 9 2 3 3 8 7 5)
+Telegram     : @hasib_hii      -> DM to buy Premium
+TikTok       : @hasib_hi
+YouTube      : @hasib_hi
+
+PLANS
+  FREE    : 3 guilds, 4 bots in each guild          (free trial available)
+  PREMIUM : 10 guilds, 8 bots in each guild         400 TK
+
+BOT BIO (coloured, letters with spaces):  O W N E R   Y O U T U B E   @h a s i b _ h i
+  main.py -> BIO_YT_HANDLE, BIO_COLORS, OWNER_NAME_BIO
+
+WEB LOGINS
+  USER  login : your name + password       free password  = hasibxglory
+                                           premium        = a premium password the owner creates
+  ADMIN login : password only              hasib10   (owner: settings, users, premium passwords, everything)
+  Change the two fixed passwords in main.py -> USER_PASSWORD, ADMIN_PASSWORD.
+  Owner panel -> "Users & Premium": number of users (free / premium), who they are, last seen, guilds,
+                 and "Create premium password" (note, days, own text or auto). A premium password locks to the first name that uses it.
+TELEGRAM PREMIUM (owner only)   /premium TELEGRAM_ID [days]     /unpremium TELEGRAM_ID

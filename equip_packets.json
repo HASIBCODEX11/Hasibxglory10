@@ -1,0 +1,41 @@
+{
+  "_help": "Optional extra equip packets. Character 102000037, profile item 102000037 and emote 909042007 are set in main.py (CHARACTER_ID, PROFILE_ITEM_ID, EMOTE_ID). The emote is equipped automatically (verified request). For the character and the profile item paste the request your own game client sends when you equip them: endpoint name + protobuf fields. $UID, $CHARACTER_ID and $ITEM_ID are replaced. Nothing is sent while 'endpoint' is empty.",
+  "enabled": false,
+  "tcp_packets": [
+    {
+      "name": "example character packet (disabled)",
+      "disabled": true,
+      "cmd": "05",
+      "fields": {
+        "1": "$UID",
+        "2": 1
+      },
+      "delay": 0.6
+    }
+  ],
+  "http_requests": [
+    {
+      "name": "example loadout request (disabled)",
+      "disabled": true,
+      "endpoint": "ChangeLoadout",
+      "fields": {
+        "1": "$UID"
+      },
+      "delay": 0.6
+    }
+  ],
+  "character_request": {
+    "endpoint": "",
+    "fields": {
+      "1": "$CHARACTER_ID"
+    },
+    "disabled": false
+  },
+  "profile_request": {
+    "endpoint": "",
+    "fields": {
+      "1": "$ITEM_ID"
+    },
+    "disabled": false
+  }
+}

@@ -1,0 +1,72 @@
+V9 (NEW)
+========
+* Bots go online and start Clash Squad / BR matches by themselves (tested: first match in about 30-60 s).
+* Faster: match search every 2 s, next match starts right after the last one ends, squads form in 25 s.
+* Website "Live logs" now shows every bot: "match found", "playing match #1 (in game, moving)",
+  "match finished -> searching the next one".
+* No more "version config failed": if the Play Store version is not accepted, the program tries
+  other game versions by itself. (Optional: FF_APP_VERSION variable on Railway forces one.)
+* Join request: "request already waiting" means the request is in Guild -> Requests. The guild
+  leader must accept it (Auto Approval OFF) and the guild needs free member slots.
+
+V8 (NEW)
+========
+* No Railway variables needed: website link + key are built in. Just upload and start.
+* New bots are named hxglory12345 and send the guild join request right after they are made.
+* Every step (acc created, join request sent, errors) shows on the website in "Live logs".
+* Website shows "Bot program ONLINE / OFFLINE".
+
+HASIB X GLORY  -  WEBSITE + BOT PROGRAM  (V6)
+==============================================
+The website now handles: user login (Google or name + password), credits, 2 free trial
+credits, coupons, UPI / Binance payment proof, owner panel and the Telegram bot.
+This bot program (main.py) only plays the matches. web_bridge.py connects the two.
+
+1. TELEGRAM
+   The website runs your Telegram bot now. Keep TG_BOT_TOKEN EMPTY on Railway,
+   otherwise the two fight over the same bot and it stops answering.
+   Your token was shared in chat: open @BotFather -> /revoke -> make a new token, then
+   update it on the website (Lovable -> Connectors -> Telegram).
+
+2. RAILWAY VARIABLES (Variables tab)
+   HX_WEB_URL     = your website link, e.g. https://ffglory.best
+   HX_ENGINE_KEY  = website -> Owner panel -> "Telegram & bot" -> Make key -> Copy
+   DATA_DIR       = /data   (with a Volume, as before)
+   HX_GLORY_FIELD = optional, see below
+
+3. HOW A SQUAD RUNS
+   User spends 1 credit -> website makes a squad (4 bots, goal 100K glory per bot = 400K).
+   Within 20 s this program picks it up, joins the bots to the guild and plays
+   (CS / CS Rank / BR follow the website switches). Every 3 minutes it reports back.
+   Goal reached / owner stops / refund -> bots of that squad switch off.
+   Owner squads have no limit. Failed launch with 0 glory -> credit refunded automatically.
+   Bot accounts: the website uses the accounts you upload in Owner -> Bot accounts.
+   If a server has none, this program creates fresh bots like before.
+
+4. GLORY NUMBERS
+   The game's guild info reply has no documented "glory" field. Look in the log for
+   "[GUILD 123...] info fields: {...}", compare with the glory you see in the game,
+   and put that field number in HX_GLORY_FIELD. Until then the website shows the
+   squad status but no glory number, and squads do not stop on glory by themselves
+   (owner can stop them from the website).
+
+5. AUTO RESTART
+   Already built in: the supervisor restarts any stopped bot every 30 s, and Railway
+   restarts the program if it crashes (railway.json restartPolicy).
+
+==============================
+V7 UPDATE
+==============================
+* Guild card on the website: guild name, level and EXP are sent every 3 minutes.
+* Restart button on every squad (website) - bots leave and join again.
+* Owner panel -> Telegram & bot -> "Restart bot program" (or /restartbots on Telegram):
+  this program exits and Railway starts it again (restartPolicyType ALWAYS).
+  Every active squad is launched again automatically after the restart.
+
+IMPORTANT for users (shown on the website too):
+  Guild -> Set Guild Info -> Approval Method:
+  Auto Approval OFF, LV DEFAULT, BR-Ranked DEFAULT, CS-Ranked DEFAULT,
+  and keep 4 free member slots. Otherwise accept the bot join requests (bots re-send them every 5 min for 1 hour).
+
+BOT BIO: every bot writes "HASIB X GLORY https://hasibxglory.lovable.app" in its bio.
+Change it with the Railway variable HX_BIO_LINK.

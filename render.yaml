@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: hasib-x-glory
+    runtime: docker
+    plan: starter            # a free plan sleeps after 15 min idle and has no disk -> use starter for 24/7 bots
+    healthCheckPath: /api/ping
+    autoDeploy: true
+    envVars:
+      - key: TG_BOT_TOKEN
+        sync: false          # paste the token in the Render dashboard (or write it in main.py)
+      - key: DATA_DIR
+        value: /var/data
+    disk:
+      name: glory-data
+      mountPath: /var/data
+      sizeGB: 1
